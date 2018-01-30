@@ -35,7 +35,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = MyCreditCardGUI1.0.0
-DISTDIR = /Users/anuuthomson/QtProjects/HF-ICT-GUI-2-SEM/build-MyCreditCardGUI-Desktop_Qt_5_9_1_clang_64bit-Debug/.tmp/MyCreditCardGUI1.0.0
+DISTDIR = /Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/build-MyCreditCardGUI-Desktop_Qt_5_9_1_clang_64bit-Debug/.tmp/MyCreditCardGUI1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.10 -Wl,-rpath,@executable_path/Frameworks -Wl,-rpath,/Users/anuuthomson/Qt/5.9.1/clang_64/lib
 LIBS          = $(SUBLIBS) -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
@@ -51,9 +51,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../MyCreditCardGUI/main.cpp \
-		../MyCreditCardGUI/creditcardgui.cpp 
+		../MyCreditCardGUI/creditcardgui.cpp \
+		../MyCreditCardGUI/eventhandler.cpp 
 OBJECTS       = main.o \
-		creditcardgui.o
+		creditcardgui.o \
+		eventhandler.o
 DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/qdevice.pri \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/device_config.prf \
@@ -212,7 +214,6 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/spec_post.prf \
-		../MyCreditCardGUI/.qmake.stash \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/toolchain.prf \
@@ -239,8 +240,10 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/exceptions.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/lex.prf \
-		../MyCreditCardGUI/MyCreditCardGUI.pro ../MyCreditCardGUI/creditcardgui.h ../MyCreditCardGUI/main.cpp \
-		../MyCreditCardGUI/creditcardgui.cpp
+		../MyCreditCardGUI/MyCreditCardGUI.pro ../MyCreditCardGUI/creditcardgui.h \
+		../MyCreditCardGUI/eventhandler.h ../MyCreditCardGUI/main.cpp \
+		../MyCreditCardGUI/creditcardgui.cpp \
+		../MyCreditCardGUI/eventhandler.cpp
 QMAKE_TARGET  = MyCreditCardGUI
 DESTDIR       = 
 TARGET        = MyCreditCardGUI.app/Contents/MacOS/MyCreditCardGUI
@@ -416,7 +419,6 @@ Makefile: ../MyCreditCardGUI/MyCreditCardGUI.pro ../../../Qt/5.9.1/clang_64/mksp
 		../../../Qt/5.9.1/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/toolchain.prf \
@@ -606,7 +608,6 @@ Makefile: ../MyCreditCardGUI/MyCreditCardGUI.pro ../../../Qt/5.9.1/clang_64/mksp
 ../../../Qt/5.9.1/clang_64/mkspecs/features/qt_config.prf:
 ../../../Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 ../../../Qt/5.9.1/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/5.9.1/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../Qt/5.9.1/clang_64/mkspecs/features/toolchain.prf:
@@ -667,8 +668,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../MyCreditCardGUI/creditcardgui.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../MyCreditCardGUI/main.cpp ../MyCreditCardGUI/creditcardgui.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../MyCreditCardGUI/creditcardgui.h ../MyCreditCardGUI/eventhandler.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../MyCreditCardGUI/main.cpp ../MyCreditCardGUI/creditcardgui.cpp ../MyCreditCardGUI/eventhandler.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -678,7 +679,6 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r MyCreditCardGUI.app
-	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -740,8 +740,17 @@ creditcardgui.o: ../MyCreditCardGUI/creditcardgui.cpp ../MyCreditCardGUI/creditc
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QComboBox \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qcombobox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o creditcardgui.o ../MyCreditCardGUI/creditcardgui.cpp
+
+eventhandler.o: ../MyCreditCardGUI/eventhandler.cpp ../MyCreditCardGUI/eventhandler.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eventhandler.o ../MyCreditCardGUI/eventhandler.cpp
 
 ####### Install
 
