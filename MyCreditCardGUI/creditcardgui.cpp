@@ -54,6 +54,7 @@ CreditCardGUI::CreditCardGUI()
 
     //OK Button -> Msg Box machen
     QPushButton *bt_ok = new QPushButton("OK");
+    bt_ok->setToolTip("TEXT XYZ");
 
     //Status -> Chng Evt Handling machen
         //Status "Gültig" oder "Nicht Gültig"
@@ -82,15 +83,16 @@ CreditCardGUI::CreditCardGUI()
     hLayout2->addWidget(cb_month);
     hLayout2->addWidget(cb_year);
 
-
     //OK Button
     QHBoxLayout *hLayout3 = new QHBoxLayout();
     hLayout3->addWidget(bt_ok);
 
+    //Status
     QHBoxLayout *hLayout4 = new QHBoxLayout();
     hLayout4->addWidget(lbl_status);
 
 
+    //hLayouts ins vLayout hinzufügen
     vLayout->addItem(hLayout1);
     vLayout->addItem(hLayout2);
     vLayout->addItem(hLayout3);

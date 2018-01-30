@@ -25,9 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    creditcardgui.cpp
+    creditcardgui.cpp \
+    eventhandler.cpp
 
 HEADERS += \
-    creditcardgui.h
+    creditcardgui.h \
+    eventhandler.h
 
 FORMS +=
