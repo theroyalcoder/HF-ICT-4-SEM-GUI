@@ -2,12 +2,22 @@
 #define EVENTHANDLER_H
 
 #include <QObject>
-#include <QWidget>
+#include <QDebug>
 
-class eventhandler
+class CreditCardGUI;
+
+class eventhandler : public QObject
 {
+Q_OBJECT
+private:
+    CreditCardGUI *parent;
+
 public:
-    eventhandler();
+    eventhandler(CreditCardGUI *parent);
+
+public slots:
+    void onCheckButtonClicked();
+
 };
 
 #endif // EVENTHANDLER_H

@@ -1,4 +1,6 @@
 #include "creditcardgui.h"
+#include "eventhandler.h"
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QVBoxLayout>
@@ -6,11 +8,16 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QComboBox>
+#include <QString>
+#include <QDebug>
+#include <string>
+
+using namespace std;
 
 CreditCardGUI::CreditCardGUI()
 {
     //Titel
-    QLabel *lbl_title = new QLabel("<h1> Credit Card Checker </h1>");
+    QLabel *lbl_title = new QLabel("<h1> Kreditkartennummer Überprüfungsvalidierungsprogrammsoftware </h1>");
 
     //Zahlen eingeben
     QLabel *lbl_num = new QLabel("Nr.: ");
@@ -18,6 +25,12 @@ CreditCardGUI::CreditCardGUI()
     QLineEdit *le_num2 = new QLineEdit();
     QLineEdit *le_num3 = new QLineEdit();
     QLineEdit *le_num4 = new QLineEdit();
+
+    //Was macht das?
+    QIntValidator *validator = new QIntValidator();
+    validator->setTop(9999);
+    block1Input->setValidator(validator);
+    block1Input->setPlaceholderText("1234");
 
     //Ablaufdatum
     QLabel *lbl_ablaufdatum = new QLabel("Ablaufdatum: ");
@@ -62,6 +75,8 @@ CreditCardGUI::CreditCardGUI()
 
 
 
+/********************Layout*********************/
+
     //Hauptlayout
     QWidget *widget = new QWidget();
     QVBoxLayout *vLayout = new QVBoxLayout();
@@ -98,9 +113,21 @@ CreditCardGUI::CreditCardGUI()
     vLayout->addItem(hLayout3);
     vLayout->addItem(hLayout4);
 
+/********************Event handling*********************/
+    eventhandler *handler = new eventhandler(this);
+    QObject::connect(
+                bt_ok, SIGNAL(clicked()),
+                handler, SLOT(onCheckButtonClicked())
+                );
+
+/********************Set Layout*********************/
     widget->setLayout(vLayout);
+
     widget->show();
 
+}
 
-
+QString CreditCardGUI::getBlock1()
+{
+    return block1Input->text();
 }
