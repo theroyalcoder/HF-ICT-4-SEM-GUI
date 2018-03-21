@@ -13,10 +13,10 @@ class MyWidget : public QWidget {
 public slots:
     void onButtonClicked();
 private:
-    QLabel titleLabel();
-    QLabel textLabel();
-    QPushButton okButton();
-    QLineEdit inputLineEdit();
+    QLabel *titleLabel = new QLabel();
+    QLabel *textLabel = new QLabel();
+    QPushButton *okButton = new QPushButton();
+    QLineEdit *inputLineEdit = new QLineEdit();
 public:
     MyWidget();
 };

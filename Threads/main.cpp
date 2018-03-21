@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "mywidget.h"
-#include "eventhandler.h"
+
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    MyWidget w;
-    w.show();
+
+    MyWidget mw;
+    mw.show();
 
     return a.exec();
 }
