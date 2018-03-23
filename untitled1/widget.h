@@ -15,6 +15,7 @@ private:
 
     QLineEdit *inputLine2;
     QPushButton *okButton;
+    QPushButton *okButton2;
 
 public:
     Widget(QWidget *parent = 0);

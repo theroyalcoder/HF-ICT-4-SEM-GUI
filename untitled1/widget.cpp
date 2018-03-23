@@ -9,6 +9,9 @@
 #include <QIntValidator>
 #include <QString>
 #include <QPalette>
+#include <QMessageBox>
+#include <QDebug>
+#include <QMouseEvent>
 
 QLineEdit *Widget::getInputLine() const
 {
@@ -24,11 +27,22 @@ Widget::Widget(QWidget *parent)
     inputLine2 = new QLineEdit();
     inputLine = new QLineEdit();
     okButton = new QPushButton("OK");
+    okButton2 = new QPushButton("OK2");
 
     //Eventhandling (s. S 32)
     Eventhandler *e = new Eventhandler(this);
     QObject::connect(okButton, SIGNAL (clicked()),
                      e, SLOT(onButtonClicked()) );
+
+
+    QObject::connect(okButton2, SIGNAL (mouseMoveEvent() ),
+                     e, SLOT(onButtonClicked()) );
+
+
+    //QMessageBox
+    QMessageBox *mb = new QMessageBox();
+    int result = mb->warning(parent, "title", "das ist der Text?", QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    //qDebug() << result;
 
 
     //Change Background of Color of QLineEdit

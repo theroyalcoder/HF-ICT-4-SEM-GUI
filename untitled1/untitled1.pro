@@ -26,8 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         widget.cpp \
-    eventhandler.cpp
+    eventhandler.cpp \
+    kunst.cpp
 
 HEADERS += \
         widget.h \
-    eventhandler.h
+    eventhandler.h \
+    kunst.h

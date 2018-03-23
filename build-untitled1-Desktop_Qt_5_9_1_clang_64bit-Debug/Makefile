@@ -52,13 +52,17 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../untitled1/main.cpp \
 		../untitled1/widget.cpp \
-		../untitled1/eventhandler.cpp moc_widget.cpp \
-		moc_eventhandler.cpp
+		../untitled1/eventhandler.cpp \
+		../untitled1/kunst.cpp moc_widget.cpp \
+		moc_eventhandler.cpp \
+		moc_kunst.cpp
 OBJECTS       = main.o \
 		widget.o \
 		eventhandler.o \
+		kunst.o \
 		moc_widget.o \
-		moc_eventhandler.o
+		moc_eventhandler.o \
+		moc_kunst.o
 DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/qdevice.pri \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/device_config.prf \
@@ -245,9 +249,11 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/lex.prf \
 		../untitled1/untitled1.pro ../untitled1/widget.h \
-		../untitled1/eventhandler.h ../untitled1/main.cpp \
+		../untitled1/eventhandler.h \
+		../untitled1/kunst.h ../untitled1/main.cpp \
 		../untitled1/widget.cpp \
-		../untitled1/eventhandler.cpp
+		../untitled1/eventhandler.cpp \
+		../untitled1/kunst.cpp
 QMAKE_TARGET  = untitled1
 DESTDIR       = 
 TARGET        = untitled1.app/Contents/MacOS/untitled1
@@ -674,8 +680,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled1/widget.h ../untitled1/eventhandler.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled1/main.cpp ../untitled1/widget.cpp ../untitled1/eventhandler.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled1/widget.h ../untitled1/eventhandler.h ../untitled1/kunst.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled1/main.cpp ../untitled1/widget.cpp ../untitled1/eventhandler.cpp ../untitled1/kunst.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -707,19 +713,23 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.10 -Wall -W -dM -E -o moc_predefs.h ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_widget.cpp moc_eventhandler.cpp
+compiler_moc_header_make_all: moc_widget.cpp moc_eventhandler.cpp moc_kunst.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_widget.cpp moc_eventhandler.cpp
+	-$(DEL_FILE) moc_widget.cpp moc_eventhandler.cpp moc_kunst.cpp
 moc_widget.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../untitled1/widget.h \
 		moc_predefs.h \
 		../../../Qt/5.9.1/clang_64/bin/moc
 	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/untitled1 -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../untitled1/widget.h -o moc_widget.cpp
 
-moc_eventhandler.cpp: ../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+moc_eventhandler.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
@@ -729,6 +739,15 @@ moc_eventhandler.cpp: ../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QO
 		moc_predefs.h \
 		../../../Qt/5.9.1/clang_64/bin/moc
 	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/untitled1 -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../untitled1/eventhandler.h -o moc_eventhandler.cpp
+
+moc_kunst.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../untitled1/kunst.h \
+		moc_predefs.h \
+		../../../Qt/5.9.1/clang_64/bin/moc
+	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/untitled1 -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../untitled1/kunst.h -o moc_kunst.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -749,6 +768,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 main.o: ../untitled1/main.cpp ../untitled1/widget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../untitled1/kunst.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../untitled1/main.cpp
@@ -756,12 +784,13 @@ main.o: ../untitled1/main.cpp ../untitled1/widget.h \
 widget.o: ../untitled1/widget.cpp ../untitled1/widget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../untitled1/eventhandler.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
@@ -770,25 +799,44 @@ widget.o: ../untitled1/widget.cpp ../untitled1/widget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPalette \
-		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpalette.h
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpalette.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget.o ../untitled1/widget.cpp
 
 eventhandler.o: ../untitled1/eventhandler.cpp ../untitled1/eventhandler.h \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QObject \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../untitled1/widget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o eventhandler.o ../untitled1/eventhandler.cpp
+
+kunst.o: ../untitled1/kunst.cpp ../untitled1/kunst.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kunst.o ../untitled1/kunst.cpp
 
 moc_widget.o: moc_widget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_widget.o moc_widget.cpp
 
 moc_eventhandler.o: moc_eventhandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_eventhandler.o moc_eventhandler.cpp
+
+moc_kunst.o: moc_kunst.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_kunst.o moc_kunst.cpp
 
 ####### Install
 
