@@ -1,4 +1,5 @@
 #include "widget.h"
+#include "eventhandler.h"
 
 #include <QPushButton>
 #include <QLineEdit>
@@ -9,15 +10,26 @@
 #include <QString>
 #include <QPalette>
 
+QLineEdit *Widget::getInputLine() const
+{
+    return inputLine;
+}
+
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
     // 1. Create Objects
-    QLabel *title = new QLabel("<h1>Das ist ein TITEL</h1>");
-    QLabel *text = new QLabel("text fljdslfjas");
-    QPushButton *okButton = new QPushButton("OK");
-    QLineEdit *inputLine = new QLineEdit();
-    QLineEdit *inputLine2 = new QLineEdit();
+    title = new QLabel("<h1>Das ist ein TITEL</h1>");
+    text = new QLabel("text fljdslfjas");
+    inputLine2 = new QLineEdit();
+    inputLine = new QLineEdit();
+    okButton = new QPushButton("OK");
+
+    //Eventhandling (s. S 32)
+    Eventhandler *e = new Eventhandler(this);
+    QObject::connect(okButton, SIGNAL (clicked()),
+                     e, SLOT(onButtonClicked()) );
+
 
     //Change Background of Color of QLineEdit
     QPalette p = inputLine->palette();
@@ -40,6 +52,7 @@ Widget::Widget(QWidget *parent)
         qDebug << "Convert NOT successful: " << value;
     }
     */
+
     // 2. Create Layout
     //Wichtig ist darauf zu achten, ob man ein hBox oder vBox (horizontal oder vertikal) nimmt
     QVBoxLayout *vBox = new QVBoxLayout();
@@ -54,6 +67,7 @@ Widget::Widget(QWidget *parent)
     // 3. Set Main Layout
     setLayout(vBox);
 }
+
 Widget::~Widget()
 {
 
