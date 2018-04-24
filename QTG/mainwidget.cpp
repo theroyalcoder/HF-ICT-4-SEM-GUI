@@ -22,9 +22,9 @@ void MainWidget::createObjects()
     in_speed = new QInputDialog();
     in_angle = new QInputDialog();
 
-    actionButton = new QPushButton(Start);
-    speedSlider = new QSlider();
-    angleSlider = new QSlider();
+    actionButton = new QPushButton("Start");
+    speedSlider = new QSlider(Qt::Horizontal);
+    angleSlider = new QSlider(Qt::Horizontal);
 }
 
 void MainWidget::createLayout()
