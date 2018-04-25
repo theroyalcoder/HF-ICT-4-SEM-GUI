@@ -53,12 +53,14 @@ OBJECTS_DIR   = ./
 SOURCES       = ../QTG/main.cpp \
 		../QTG/mainwindow.cpp \
 		../QTG/mainwidget.cpp \
-		../QTG/gamearea.cpp moc_mainwindow.cpp \
+		../QTG/gamearea.cpp \
+		../QTG/constants.cpp moc_mainwindow.cpp \
 		moc_mainwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		mainwidget.o \
 		gamearea.o \
+		constants.o \
 		moc_mainwindow.o \
 		moc_mainwidget.o
 DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
@@ -248,10 +250,12 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/lex.prf \
 		../QTG/QTG.pro ../QTG/mainwindow.h \
 		../QTG/mainwidget.h \
-		../QTG/gamearea.h ../QTG/main.cpp \
+		../QTG/gamearea.h \
+		../QTG/constants.h ../QTG/main.cpp \
 		../QTG/mainwindow.cpp \
 		../QTG/mainwidget.cpp \
-		../QTG/gamearea.cpp
+		../QTG/gamearea.cpp \
+		../QTG/constants.cpp
 QMAKE_TARGET  = QTG
 DESTDIR       = 
 TARGET        = QTG.app/Contents/MacOS/QTG
@@ -678,8 +682,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/constants.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/constants.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -721,7 +725,16 @@ moc_mainwindow.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/Q
 		../../../Qt/5.9.1/clang_64/bin/moc
 	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../QTG/mainwindow.h -o moc_mainwindow.cpp
 
-moc_mainwidget.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+moc_mainwidget.cpp: ../QTG/gamearea.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
@@ -729,6 +742,10 @@ moc_mainwidget.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/Q
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
 		../QTG/mainwidget.h \
 		moc_predefs.h \
 		../../../Qt/5.9.1/clang_64/bin/moc
@@ -753,16 +770,16 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 main.o: ../QTG/main.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QTG/main.cpp
-
-mainwindow.o: ../QTG/mainwindow.cpp ../QTG/mainwindow.h \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QTG/mainwindow.cpp
-
-mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
+		../QTG/mainwidget.h \
+		../QTG/gamearea.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
@@ -771,25 +788,89 @@ mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QTG/main.cpp
+
+mainwindow.o: ../QTG/mainwindow.cpp ../QTG/mainwindow.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../QTG/mainwidget.h \
+		../QTG/gamearea.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QTG/mainwindow.cpp
+
+mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
+		../QTG/gamearea.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwidget.o ../QTG/mainwidget.cpp
 
 gamearea.o: ../QTG/gamearea.cpp ../QTG/gamearea.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
-		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamearea.o ../QTG/gamearea.cpp
+
+constants.o: ../QTG/constants.cpp ../QTG/constants.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o constants.o ../QTG/constants.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

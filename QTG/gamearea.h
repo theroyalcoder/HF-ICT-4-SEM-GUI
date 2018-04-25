@@ -4,15 +4,19 @@
 #include <QImage>
 #include <vector>
 #include <QPaintEvent>
+#include <QPainter>
+#include <QImage>
+#include <QString>
+#include <QWidget>
 using namespace std;
 
-class GameArea
+class GameArea : public QWidget
 {
 private:
-    QImage *backgrounding;
+    QImage *backgroundImg;
     //vector<GameObject *> gameObjects;
 public:
-    GameArea();
+    GameArea(QWidget *parent = 0);
     void paintEvent(QPaintEvent *event);
     void startGame();
     void shoot(int speed, int angle);

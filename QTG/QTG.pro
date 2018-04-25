@@ -27,9 +27,11 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     mainwidget.cpp \
-    gamearea.cpp
+    gamearea.cpp \
+    constants.cpp
 
 HEADERS += \
         mainwindow.h \
     mainwidget.h \
-    gamearea.h
+    gamearea.h \
+    constants.h
