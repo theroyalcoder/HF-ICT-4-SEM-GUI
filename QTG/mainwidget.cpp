@@ -37,15 +37,18 @@ void MainWidget::createObjects()
     angleLabel = new QLabel("Angle:");
 
     numberOfShotsInput = new QLineEdit();
+
     speedInput = new QLineEdit();
+    speedInput->setText("1");
+
     angleInput = new QLineEdit();
+    angleInput->setText("0");
 
     actionButton = new QPushButton("Start");
 
     speedSlider = new QSlider(Qt::Horizontal);
     speedSlider->setMinimum(1);
     speedSlider->setMaximum(100);
-
 
     angleSlider = new QSlider(Qt::Horizontal);
     angleSlider->setMinimum(0);
@@ -60,7 +63,6 @@ void MainWidget::createLayout()
     QVBoxLayout *vAll = new QVBoxLayout();
     QVBoxLayout *vGameArea = new QVBoxLayout();
     QHBoxLayout *hBottom = new QHBoxLayout();
-
 
     //Adds the Backgroudimage and everything else from a gameare object
     vAll->addWidget(titleLabel);
@@ -100,6 +102,11 @@ void MainWidget::connectObjects()
     QObject::connect(
                 angleSlider, SIGNAL(valueChanged(int)),
                 this, SLOT(setAngleInputValue(int)));
+
+    //actionbutton
+    QObject::connect(
+                actionButton, SIGNAL(clicked()),
+                this, SLOT(setActionButtonValue()));
 }
 
 void MainWidget::speedSliderMoved(int value)
@@ -118,12 +125,15 @@ void MainWidget::angleSliderMoved(int value)
 void MainWidget::actionButtonClicked()
 {
     qDebug() << "actionButtonClicked" << endl;
+    actionButton->setText("Shoot");
 
+    numberOfShots = numberOfShots + 1;
+    numberOfShotsInput->setText(numberOfShots);
 }
 
 void MainWidget::setSpeedInputValue(int v)
 {
-    qDebug() << "setSpeedInputValue" << endl;
+    qDebug() << "setSpeedInputValue";
 
     QString s = QString::number(v);
     speedInput->setText(s);
@@ -131,9 +141,23 @@ void MainWidget::setSpeedInputValue(int v)
 
 void MainWidget::setAngleInputValue(int v)
 {
-    qDebug() << "setAngleInputValue" << endl;
+    qDebug() << "setAngleInputValue";
 
     QString s = QString::number(v);
     angleInput->setText(s);
+}
+
+void MainWidget::setActionButtonValue()
+{
+    qDebug() << "MainWidget - setActionButtonValue";
+    static int count = -1;
+
+    actionButton->setText("Shoot");
+
+    count++;
+    numberOfShotsInput->setText(QString::number(count));
+
+    qDebug() << "MainWidget - start Game";
+    ga->startGame();
 
 }

@@ -2,6 +2,7 @@
 #define MAINWIDGET_H
 
 #include "gamearea.h"
+#include "gameobejct.h"
 
 #include <QWidget>
 #include <QSlider>
@@ -9,11 +10,14 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QInputDialog>
+#include <QString>
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
 private:
+    QString numberOfShots = "-1";
+
     QSlider *angleSlider;
     QSlider *speedSlider;
 
@@ -29,6 +33,9 @@ private:
     QLabel *angleLabel;
 
     GameArea *ga;
+    GameObject *obstacle;
+    GameObject *player;
+    GameObject *shoot;
 
     void createObjects();
     void createLayout();
@@ -42,6 +49,7 @@ public:
 public slots:
     void setSpeedInputValue(int v);
     void setAngleInputValue(int v);
+    void setActionButtonValue();
 };
 
 #endif // MAINWIDGET_H

@@ -54,13 +54,19 @@ SOURCES       = ../QTG/main.cpp \
 		../QTG/mainwindow.cpp \
 		../QTG/mainwidget.cpp \
 		../QTG/gamearea.cpp \
-		../QTG/constants.cpp moc_mainwindow.cpp \
+		../QTG/gameobejct.cpp \
+		../QTG/obstacle.cpp \
+		../QTG/player.cpp \
+		../QTG/shoot.cpp moc_mainwindow.cpp \
 		moc_mainwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		mainwidget.o \
 		gamearea.o \
-		constants.o \
+		gameobejct.o \
+		obstacle.o \
+		player.o \
+		shoot.o \
 		moc_mainwindow.o \
 		moc_mainwidget.o
 DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
@@ -251,11 +257,17 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../QTG/QTG.pro ../QTG/mainwindow.h \
 		../QTG/mainwidget.h \
 		../QTG/gamearea.h \
-		../QTG/constants.h ../QTG/main.cpp \
+		../QTG/gameobejct.h \
+		../QTG/obstacle.h \
+		../QTG/player.h \
+		../QTG/shoot.h ../QTG/main.cpp \
 		../QTG/mainwindow.cpp \
 		../QTG/mainwidget.cpp \
 		../QTG/gamearea.cpp \
-		../QTG/constants.cpp
+		../QTG/gameobejct.cpp \
+		../QTG/obstacle.cpp \
+		../QTG/player.cpp \
+		../QTG/shoot.cpp
 QMAKE_TARGET  = QTG
 DESTDIR       = 
 TARGET        = QTG.app/Contents/MacOS/QTG
@@ -682,8 +694,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/constants.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/constants.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/gameobejct.h ../QTG/obstacle.h ../QTG/player.h ../QTG/shoot.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/gameobejct.cpp ../QTG/obstacle.cpp ../QTG/player.cpp ../QTG/shoot.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -736,6 +748,7 @@ moc_mainwidget.cpp: ../QTG/gamearea.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/gameobejct.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -782,6 +795,7 @@ main.o: ../QTG/main.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/gameobejct.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -811,6 +825,7 @@ mainwindow.o: ../QTG/mainwindow.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/gameobejct.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -835,6 +850,7 @@ mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/gameobejct.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -863,14 +879,57 @@ gamearea.o: ../QTG/gamearea.cpp ../QTG/gamearea.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/gameobejct.h \
+		../QTG/obstacle.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamearea.o ../QTG/gamearea.cpp
 
-constants.o: ../QTG/constants.cpp ../QTG/constants.h \
+gameobejct.o: ../QTG/gameobejct.cpp ../QTG/gameobejct.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
-		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o constants.o ../QTG/constants.cpp
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../QTG/obstacle.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gameobejct.o ../QTG/gameobejct.cpp
+
+obstacle.o: ../QTG/obstacle.cpp ../QTG/obstacle.h \
+		../QTG/gameobejct.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obstacle.o ../QTG/obstacle.cpp
+
+player.o: ../QTG/player.cpp ../QTG/player.h \
+		../QTG/gameobejct.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../QTG/player.cpp
+
+shoot.o: ../QTG/shoot.cpp ../QTG/shoot.h \
+		../QTG/gameobejct.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shoot.o ../QTG/shoot.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

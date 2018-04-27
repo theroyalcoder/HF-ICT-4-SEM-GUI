@@ -28,10 +28,16 @@ SOURCES += \
         mainwindow.cpp \
     mainwidget.cpp \
     gamearea.cpp \
-    constants.cpp
+    gameobejct.cpp \
+    obstacle.cpp \
+    player.cpp \
+    shoot.cpp
 
 HEADERS += \
         mainwindow.h \
     mainwidget.h \
     gamearea.h \
-    constants.h
+    gameobejct.h \
+    obstacle.h \
+    player.h \
+    shoot.h
