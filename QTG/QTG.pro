@@ -31,7 +31,8 @@ SOURCES += \
     gameobejct.cpp \
     obstacle.cpp \
     player.cpp \
-    shoot.cpp
+    shoot.cpp \
+    thread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,4 +41,5 @@ HEADERS += \
     gameobejct.h \
     obstacle.h \
     player.h \
-    shoot.h
+    shoot.h \
+    thread.h

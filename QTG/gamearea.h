@@ -17,6 +17,7 @@ using namespace std;
 
 class GameArea : public QWidget
 {
+    Q_OBJECT
 private:
     QImage *backgroundImg;
     vector<GameObject *> gameObjects;

@@ -152,12 +152,17 @@ void MainWidget::setActionButtonValue()
     qDebug() << "MainWidget - setActionButtonValue";
     static int count = -1;
 
-    actionButton->setText("Shoot");
-
     count++;
     numberOfShotsInput->setText(QString::number(count));
 
-    qDebug() << "MainWidget - start Game";
-    ga->startGame();
+    if(count == 0) {
+        qDebug() << "MainWidget - start Game";
+        ga->startGame();
+        actionButton->setText("Shoot");
+    } else {
+        ga->shoot(1, 3);
+    }
+
+
 
 }

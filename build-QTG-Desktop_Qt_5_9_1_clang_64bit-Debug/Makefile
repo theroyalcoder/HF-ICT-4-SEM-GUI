@@ -57,8 +57,11 @@ SOURCES       = ../QTG/main.cpp \
 		../QTG/gameobejct.cpp \
 		../QTG/obstacle.cpp \
 		../QTG/player.cpp \
-		../QTG/shoot.cpp moc_mainwindow.cpp \
-		moc_mainwidget.cpp
+		../QTG/shoot.cpp \
+		../QTG/thread.cpp moc_mainwindow.cpp \
+		moc_mainwidget.cpp \
+		moc_gamearea.cpp \
+		moc_thread.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		mainwidget.o \
@@ -67,8 +70,11 @@ OBJECTS       = main.o \
 		obstacle.o \
 		player.o \
 		shoot.o \
+		thread.o \
 		moc_mainwindow.o \
-		moc_mainwidget.o
+		moc_mainwidget.o \
+		moc_gamearea.o \
+		moc_thread.o
 DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/qdevice.pri \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/device_config.prf \
@@ -260,14 +266,16 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../QTG/gameobejct.h \
 		../QTG/obstacle.h \
 		../QTG/player.h \
-		../QTG/shoot.h ../QTG/main.cpp \
+		../QTG/shoot.h \
+		../QTG/thread.h ../QTG/main.cpp \
 		../QTG/mainwindow.cpp \
 		../QTG/mainwidget.cpp \
 		../QTG/gamearea.cpp \
 		../QTG/gameobejct.cpp \
 		../QTG/obstacle.cpp \
 		../QTG/player.cpp \
-		../QTG/shoot.cpp
+		../QTG/shoot.cpp \
+		../QTG/thread.cpp
 QMAKE_TARGET  = QTG
 DESTDIR       = 
 TARGET        = QTG.app/Contents/MacOS/QTG
@@ -694,8 +702,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/gameobejct.h ../QTG/obstacle.h ../QTG/player.h ../QTG/shoot.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/gameobejct.cpp ../QTG/obstacle.cpp ../QTG/player.cpp ../QTG/shoot.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/gameobejct.h ../QTG/obstacle.h ../QTG/player.h ../QTG/shoot.h ../QTG/thread.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/gameobejct.cpp ../QTG/obstacle.cpp ../QTG/player.cpp ../QTG/shoot.cpp ../QTG/thread.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -727,9 +735,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk -mmacosx-version-min=10.10 -Wall -W -dM -E -o moc_predefs.h ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_mainwidget.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_mainwidget.cpp moc_gamearea.cpp moc_thread.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_mainwidget.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_mainwidget.cpp moc_gamearea.cpp moc_thread.cpp
 moc_mainwindow.cpp: ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../QTG/mainwindow.h \
@@ -748,7 +756,10 @@ moc_mainwidget.cpp: ../QTG/gamearea.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/obstacle.h \
 		../QTG/gameobejct.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -763,6 +774,32 @@ moc_mainwidget.cpp: ../QTG/gamearea.h \
 		moc_predefs.h \
 		../../../Qt/5.9.1/clang_64/bin/moc
 	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../QTG/mainwidget.h -o moc_mainwidget.cpp
+
+moc_gamearea.cpp: ../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/obstacle.h \
+		../QTG/gameobejct.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
+		../QTG/gamearea.h \
+		moc_predefs.h \
+		../../../Qt/5.9.1/clang_64/bin/moc
+	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../QTG/gamearea.h -o moc_gamearea.cpp
+
+moc_thread.cpp: ../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../QTG/thread.h \
+		moc_predefs.h \
+		../../../Qt/5.9.1/clang_64/bin/moc
+	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/Users/anuuthomson/Qt/5.9.1/clang_64/mkspecs/macx-clang -I/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtGui.framework/Headers -I/Users/anuuthomson/Qt/5.9.1/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/anuuthomson/Qt/5.9.1/clang_64/lib ../QTG/thread.h -o moc_thread.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -795,7 +832,10 @@ main.o: ../QTG/main.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/obstacle.h \
 		../QTG/gameobejct.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -825,7 +865,10 @@ mainwindow.o: ../QTG/mainwindow.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/obstacle.h \
 		../QTG/gameobejct.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -850,7 +893,10 @@ mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../QTG/obstacle.h \
 		../QTG/gameobejct.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QSlider \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
@@ -879,8 +925,13 @@ gamearea.o: ../QTG/gamearea.cpp ../QTG/gamearea.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
-		../QTG/gameobejct.h \
 		../QTG/obstacle.h \
+		../QTG/gameobejct.h \
+		../QTG/player.h \
+		../QTG/shoot.h \
+		../QTG/thread.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamearea.o ../QTG/gamearea.cpp
@@ -931,11 +982,22 @@ shoot.o: ../QTG/shoot.cpp ../QTG/shoot.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shoot.o ../QTG/shoot.cpp
 
+thread.o: ../QTG/thread.cpp ../QTG/thread.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o thread.o ../QTG/thread.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 moc_mainwidget.o: moc_mainwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwidget.o moc_mainwidget.cpp
+
+moc_gamearea.o: moc_gamearea.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_gamearea.o moc_gamearea.cpp
+
+moc_thread.o: moc_thread.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_thread.o moc_thread.cpp
 
 ####### Install
 

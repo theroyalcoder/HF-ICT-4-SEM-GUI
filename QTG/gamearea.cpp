@@ -3,6 +3,7 @@
 #include "obstacle.h"
 #include "player.h"
 #include "shoot.h"
+#include "thread.h"
 
 #include <QDebug>
 #include <QPainter>
@@ -18,11 +19,18 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
 
     Obstacle *obst = new Obstacle(700, 20);
     Player *play = new Player(10, 200);
-    Shoot *weapon = new Shoot(150, 190, 1, 2);
 
     gameObjects.push_back(obst);
     gameObjects.push_back(play);
-    gameObjects.push_back(weapon);
+
+    Thread *t = new Thread();
+
+    QObject::connect(
+                t, SIGNAL(refresh()),
+                this, SLOT(next()));
+
+    t->start();
+
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
@@ -47,11 +55,16 @@ void GameArea::startGame()
 
 void GameArea::shoot(int speed, int angle)
 {    
-//    Shoot *shoo = new Shoot(20, 200, speed, angle);
-//    shoo->paint(painter);
+    Shoot *weapon = new Shoot(150, 190, speed, angle);
+    gameObjects.push_back(weapon);
+    weapon->paint(painter);
 }
 
 void GameArea::next()
 {
+    qDebug() << "next";
+    // Durch alle GameObjects durchgehen und move() ausführen
 
+
+//    update();
 }
