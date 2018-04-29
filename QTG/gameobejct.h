@@ -8,6 +8,8 @@
 class GameObject
 {
 public:
+    QImage *img;
+
     GameObject(int x, int y, QString imgPath, int width);
     virtual void move() = 0;
     void paint(QPainter *painter);
@@ -19,8 +21,6 @@ public:
 
     int width();
     int height();
-
-    QImage *img;
 
 protected:
     int x;

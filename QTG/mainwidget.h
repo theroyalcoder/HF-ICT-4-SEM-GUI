@@ -40,12 +40,14 @@ private:
     void createObjects();
     void createLayout();
     void connectObjects();
+
 public:
     MainWidget(QWidget *parent = 0);
     void speedSliderMoved(int value);
     void angleSliderMoved(int value);
     void actionButtonClicked();
     void onGameFinished();
+
 public slots:
     void setSpeedInputValue(int v);
     void setAngleInputValue(int v);

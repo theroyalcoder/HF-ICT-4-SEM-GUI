@@ -26,12 +26,12 @@ public:
     void paintEvent(QPaintEvent *event);
     void startGame();
     void shoot(int speed, int angle);
-    void next();
-    QPaintEvent *event;
-    QPainter *painter;
 
 protected:
     void gameFinished();
+
+public slots:
+    void next();
 };
 
 #endif // GAMEAREA_H

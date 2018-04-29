@@ -5,7 +5,7 @@
 #include <QDebug>
 
 Obstacle::Obstacle(int x, int y)
-    : GameObject(x, y, "/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG/0_img/ballon.png", 100)
+    : GameObject(x, y, "/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG/0_img/obstacle.png", 105)
 {
     qDebug() << "Constructor Obstacle";
 }

@@ -157,10 +157,10 @@ void MainWidget::setActionButtonValue()
 
     if(count == 0) {
         qDebug() << "MainWidget - start Game";
-        ga->startGame();
         actionButton->setText("Shoot");
+        ga->startGame();
     } else {
-        ga->shoot(1, 3);
+        ga->shoot(1, 2);
     }
 
 

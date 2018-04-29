@@ -13,5 +13,4 @@ void Thread::run()
         emit refresh();
         msleep(35);
     }
-
 }
