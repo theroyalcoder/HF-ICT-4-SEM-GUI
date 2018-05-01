@@ -21,13 +21,11 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
     QImage img(constants::ImgFolder + "background.gif");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
-<<<<<<< HEAD
+
     //QTsound
     //QSound bells("mysounds/bells.wav");
     //bells.play();
 
-=======
->>>>>>> 4322297b1b2ff39c9f6a1bc7298c8efe14712cb6
     //Thread
     Thread *t = new Thread();
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
@@ -88,14 +86,6 @@ void GameArea::next()
         go->move();
     }
 
-<<<<<<< HEAD
-    /*
-    if(ka.check(ssshoot,obst)){
-        //qDebug() << "Getroffen";
-    }
-*/
-=======
 //    update
->>>>>>> 4322297b1b2ff39c9f6a1bc7298c8efe14712cb6
     update();
 }
