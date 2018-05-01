@@ -6,7 +6,6 @@
 class constants
 {
 public:
-
     static QString ImgFolder;
 };
 

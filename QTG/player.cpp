@@ -3,12 +3,12 @@
 #include "constants.h"
 
 Player::Player(int x, int y)
-    : GameObject(x, y, constants::ImgFolder + "gorilla.png", 250)
+    : GameObject(x, y, constants::ImgFolder + "player.png", 250)
 {
 //player.jpg
 }
 
 void Player::move()
 {
-    //leer lassen (player bewegt sich nicht)
+    //    todo: implement
 }

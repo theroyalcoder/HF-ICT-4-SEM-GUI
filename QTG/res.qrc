@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>1_audio/shoot_playermusic.mp3</file>
+        <file>1_audio/start.mp3</file>
+    </qresource>
+</RCC>

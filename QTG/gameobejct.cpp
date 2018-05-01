@@ -9,8 +9,6 @@
 
 GameObject::GameObject(int x, int y, QString imgPath, int width)
 {
-    //qDebug() << "GameObject created";
-
     this->setX(x);
     this->setY(y);
 
@@ -20,37 +18,18 @@ GameObject::GameObject(int x, int y, QString imgPath, int width)
 
 void GameObject::paint(QPainter *painter)
 {
-//    qDebug() << "GameObject paint methode";
-
     painter->drawImage(this->getX(), this->getY(), *img);
 }
 
-int GameObject::getX() const
-{
-    return x;
-}
+//Getter and Setter methods
+int GameObject::getX() const {return x;}
 
-void GameObject::setX(int value)
-{
-    x = value;
-}
+void GameObject::setX(int value) {x = value;}
 
-int GameObject::getY() const
-{
-    return y;
-}
+int GameObject::getY() const {return y;}
 
-void GameObject::setY(int value)
-{
-    y = value;
-}
+void GameObject::setY(int value) {y = value;}
 
-int GameObject::width()
-{
-    return img->width();
-}
+int GameObject::width() {return img->width();}
 
-int GameObject::height()
-{
-    return img->height();
-}
+int GameObject::height() {return img->height();}

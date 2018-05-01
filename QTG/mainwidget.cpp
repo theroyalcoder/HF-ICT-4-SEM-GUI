@@ -13,15 +13,22 @@
 #include <QDebug>
 #include <QSlider>
 #include <QPaintEvent>
+#include <QtMultimedia/QSound>
+#include <QMediaPlayer>
+#include <QUrl>
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
 {
-    //qDebug() << "Create MainWidget";
     ga = new GameArea(parent);
 
+//    Initialisation of speed and angle
     speed = 0;
     angle = 0;
+
+//    Initialisation of shootSound
+    shootSound = new QMediaPlayer();
+    shootSound->setMedia(QUrl("qrc:/sounds/1_audio/shoot_playermusic.mp3"));
 
     createObjects();
     createLayout();
@@ -31,8 +38,8 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 void MainWidget::createObjects()
 {
     //1. Create Objects
-    //qDebug() << "Create Objects";
-    titleLabel = new QLabel("<h1>QTG</h1>");
+
+    titleLabel = new QLabel("<h1>Welcome Player ONE</h1>");
     titleLabel->setGeometry(0, 0, 10, 10);
 
     shootsLabel = new QLabel("#Shoots:");
@@ -60,14 +67,12 @@ void MainWidget::createObjects()
 
 void MainWidget::createLayout()
 {
-    //qDebug() << "Create Layout";
-
     //2. Create Layout
     QVBoxLayout *vAll = new QVBoxLayout();
     QVBoxLayout *vGameArea = new QVBoxLayout();
     QHBoxLayout *hBottom = new QHBoxLayout();
 
-    //Adds the Backgroudimage and everything else from a gameare object
+    //Adds the Backgroudimage and everything else from a gamearea object
     vAll->addWidget(titleLabel);
 
     vGameArea->addWidget(ga);
@@ -94,8 +99,6 @@ void MainWidget::createLayout()
 
 void MainWidget::connectObjects()
 {
-    //qDebug() << "Connect Objects";
-
     //Speedsilder
     QObject::connect(
                 speedSlider, SIGNAL(valueChanged(int)),
@@ -114,38 +117,37 @@ void MainWidget::connectObjects()
 
 void MainWidget::speedSliderMoved(int value)
 {
-    //qDebug() << "speedSliderMoved" << endl;
-    //qDebug() << value;
+    qDebug() << "SpeedSlider Value: " << value;
 
     speed = value;
 
-    QString s = QString::number(value);
+    QString s = QString::number(speed);
     speedInput->setText(s);
 }
 
 void MainWidget::angleSliderMoved(int value)
 {
-    //qDebug() << "angleSliderMoved" << endl;
-    //qDebug() << value;
+    qDebug() << "AngleSlider Value: " << value;
 
     angle = value;
 
-    QString s = QString::number(value);
+    QString s = QString::number(angle);
     angleInput->setText(s);
 
 }
 
 void MainWidget::actionButtonClicked()
 {
-    //qDebug() << "actionButtonClicked" << endl;
+    qDebug() << "actionButton clicked" << endl;
+
     actionButton->setText("Shoot");
 
     numberOfShots = numberOfShots + 1;
     numberOfShotsInput->setText(numberOfShots);
 
     static int count = -1;
-
     count++;
+
     numberOfShotsInput->setText(QString::number(count));
 
     if(count == 0) {
@@ -153,6 +155,7 @@ void MainWidget::actionButtonClicked()
         actionButton->setText("Shoot");
         ga->startGame();
     } else {
+        shootSound->play();
         ga->shoot(speed, angle);
     }
 }
