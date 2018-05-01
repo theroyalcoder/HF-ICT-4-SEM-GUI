@@ -15,10 +15,13 @@ Shoot::Shoot(int x, int y, int speed, int angle)
 
 void Shoot::move()
 {
+<<<<<<< HEAD
     //qDebug() << "angle" << angle;
     //qDebug() << "speed" << speed;
     //qDebug() << "t" << t;
 
+=======
+>>>>>>> 4322297b1b2ff39c9f6a1bc7298c8efe14712cb6
     const double g = 9.81;
     double rad = 3.1415926 / 180 * angle;
     int dx = speed / 3 * cos(rad) * t;
