@@ -48,7 +48,7 @@ void GameArea::paintEvent(QPaintEvent *event)
 void GameArea::startGame()
 {
 //    Create Player
-    Player *player = new Player(0, 195);
+    Player *player = new Player(0, 335);
     gameObjects.push_back(player);
 
     srand(time(NULL));
@@ -59,7 +59,8 @@ void GameArea::startGame()
     x = rand() % (w / 4) + 3 * w / 4 - 50;
     y = rand() % (height() - 100) + 50;
 
-    Obstacle *obst = new Obstacle(x, y);
+    //Obstacle *obst = new Obstacle(x, y);
+    Obstacle *obst = new Obstacle(850, 200);
     gameObjects.push_back(obst);
 
 //    update
@@ -69,8 +70,18 @@ void GameArea::startGame()
 void GameArea::shoot(int speed, int angle)
 {
 //    Create Shoot Object and push back to the other GameObjects
-    Shoot *shoot = new Shoot(150, 190, speed, angle);
+    Shoot *shoot = new Shoot(140, 340, speed, angle);
     gameObjects.push_back(shoot);
+}
+
+int GameArea::getWidth()
+{
+    return width();
+}
+
+int GameArea::getHeight()
+{
+    return height();
 }
 
 void GameArea::next()
@@ -91,6 +102,8 @@ void GameArea::next()
             getroffen = ka->check(gameObjects.at(i), gameObjects.at(1));
         }
         if(!getroffen){
+                //gameObjects.erase(gameObjects.begin()+2);
+
             qDebug() << "    ";
         }
 

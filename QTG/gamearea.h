@@ -21,12 +21,17 @@ class GameArea : public QWidget
 private:
     QImage *backgroundImg;
     vector<GameObject *> gameObjects;
+    //int heigth;
+    //int width;
 
 public:
     GameArea(QWidget *parent = 0);
     void paintEvent(QPaintEvent *event);
     void startGame();
     void shoot(int speed, int angle);
+    //
+    int getWidth();
+    int getHeight();
 
 protected:
     void gameFinished();

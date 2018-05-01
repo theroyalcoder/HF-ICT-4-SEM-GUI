@@ -28,11 +28,17 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 
 //    Initialisation of shootSound
     shootSound = new QMediaPlayer();
-    shootSound->setMedia(QUrl("qrc:/sounds/1_audio/shoot_playermusic.mp3"));
+    //shootSound->setMedia(QUrl("qrc:/sounds/1_audio/shoot_playermusic.mp3"));
+    shootSound->setMedia(QUrl("//Users//patrick//Downloads//img//1_audio//shoot_playermusic.mp3"));
 
     createObjects();
     createLayout();
     connectObjects();
+}
+
+void MainWidget::onGameFinished()
+{
+
 }
 
 void MainWidget::createObjects()
@@ -49,9 +55,11 @@ void MainWidget::createObjects()
     numberOfShotsInput = new QLineEdit();
 
     speedInput = new QLineEdit();
+    //speedInput->setReadOnly(true);
     speedInput->setText("1");
 
     angleInput = new QLineEdit();
+    //angleInput->setReadOnly(true);
     angleInput->setText("0");
 
     actionButton = new QPushButton("Start");
@@ -117,7 +125,7 @@ void MainWidget::connectObjects()
 
 void MainWidget::speedSliderMoved(int value)
 {
-    qDebug() << "SpeedSlider Value: " << value;
+    //qDebug() << "SpeedSlider Value: " << value;
 
     speed = value;
 
@@ -127,7 +135,7 @@ void MainWidget::speedSliderMoved(int value)
 
 void MainWidget::angleSliderMoved(int value)
 {
-    qDebug() << "AngleSlider Value: " << value;
+    //qDebug() << "AngleSlider Value: " << value;
 
     angle = value;
 
@@ -138,7 +146,7 @@ void MainWidget::angleSliderMoved(int value)
 
 void MainWidget::actionButtonClicked()
 {
-    qDebug() << "actionButton clicked" << endl;
+    //qDebug() << "actionButton clicked" << endl;
 
     actionButton->setText("Shoot");
 
