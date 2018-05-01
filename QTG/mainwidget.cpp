@@ -14,11 +14,14 @@
 #include <QSlider>
 #include <QPaintEvent>
 
-MainWidget::MainWidget(QWidget *parent)
+MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
 {
     qDebug() << "Create MainWidget";
     ga = new GameArea(parent);
+
+    speed = 0;
+    angle = 0;
 
     createObjects();
     createLayout();
@@ -96,29 +99,39 @@ void MainWidget::connectObjects()
     //Speedsilder
     QObject::connect(
                 speedSlider, SIGNAL(valueChanged(int)),
-                this, SLOT(setSpeedInputValue(int)));
+                this, SLOT(speedSliderMoved(int)));
 
     //angleslider
     QObject::connect(
                 angleSlider, SIGNAL(valueChanged(int)),
-                this, SLOT(setAngleInputValue(int)));
+                this, SLOT(angleSliderMoved(int)));
 
     //actionbutton
     QObject::connect(
                 actionButton, SIGNAL(clicked()),
-                this, SLOT(setActionButtonValue()));
+                this, SLOT(actionButtonClicked()));
 }
 
 void MainWidget::speedSliderMoved(int value)
 {
     qDebug() << "speedSliderMoved" << endl;
     qDebug() << value;
+
+    speed = value;
+
+    QString s = QString::number(value);
+    speedInput->setText(s);
 }
 
 void MainWidget::angleSliderMoved(int value)
 {
     qDebug() << "angleSliderMoved" << endl;
     qDebug() << value;
+
+    angle = value;
+
+    QString s = QString::number(value);
+    angleInput->setText(s);
 
 }
 
@@ -129,27 +142,7 @@ void MainWidget::actionButtonClicked()
 
     numberOfShots = numberOfShots + 1;
     numberOfShotsInput->setText(numberOfShots);
-}
 
-void MainWidget::setSpeedInputValue(int v)
-{
-    qDebug() << "setSpeedInputValue";
-
-    QString s = QString::number(v);
-    speedInput->setText(s);
-}
-
-void MainWidget::setAngleInputValue(int v)
-{
-    qDebug() << "setAngleInputValue";
-
-    QString s = QString::number(v);
-    angleInput->setText(s);
-}
-
-void MainWidget::setActionButtonValue()
-{
-    qDebug() << "MainWidget - setActionButtonValue";
     static int count = -1;
 
     count++;
@@ -160,9 +153,6 @@ void MainWidget::setActionButtonValue()
         actionButton->setText("Shoot");
         ga->startGame();
     } else {
-        ga->shoot(1, 2);
+        ga->shoot(speed, angle);
     }
-
-
-
 }

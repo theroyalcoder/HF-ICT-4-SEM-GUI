@@ -17,6 +17,8 @@ class MainWidget : public QWidget
     Q_OBJECT
 private:
     QString numberOfShots = "-1";
+    int speed;
+    int angle;
 
     QSlider *angleSlider;
     QSlider *speedSlider;
@@ -42,16 +44,13 @@ private:
     void connectObjects();
 
 public:
-    MainWidget(QWidget *parent = 0);
-    void speedSliderMoved(int value);
-    void angleSliderMoved(int value);
-    void actionButtonClicked();
+    MainWidget(QWidget *parent = 0, int lspeed = 0, int langle = 0);
     void onGameFinished();
 
 public slots:
-    void setSpeedInputValue(int v);
-    void setAngleInputValue(int v);
-    void setActionButtonValue();
+    void speedSliderMoved(int value);
+    void angleSliderMoved(int value);
+    void actionButtonClicked();
 };
 
 #endif // MAINWIDGET_H

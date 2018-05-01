@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWidget_t {
     QByteArrayData data[6];
-    char stringdata0[73];
+    char stringdata0[72];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,15 +32,15 @@ struct qt_meta_stringdata_MainWidget_t {
 static const qt_meta_stringdata_MainWidget_t qt_meta_stringdata_MainWidget = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "MainWidget"
-QT_MOC_LITERAL(1, 11, 18), // "setSpeedInputValue"
-QT_MOC_LITERAL(2, 30, 0), // ""
-QT_MOC_LITERAL(3, 31, 1), // "v"
-QT_MOC_LITERAL(4, 33, 18), // "setAngleInputValue"
-QT_MOC_LITERAL(5, 52, 20) // "setActionButtonValue"
+QT_MOC_LITERAL(1, 11, 16), // "speedSliderMoved"
+QT_MOC_LITERAL(2, 28, 0), // ""
+QT_MOC_LITERAL(3, 29, 5), // "value"
+QT_MOC_LITERAL(4, 35, 16), // "angleSliderMoved"
+QT_MOC_LITERAL(5, 52, 19) // "actionButtonClicked"
 
     },
-    "MainWidget\0setSpeedInputValue\0\0v\0"
-    "setAngleInputValue\0setActionButtonValue"
+    "MainWidget\0speedSliderMoved\0\0value\0"
+    "angleSliderMoved\0actionButtonClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -76,9 +76,9 @@ void MainWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWidget *_t = static_cast<MainWidget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->setSpeedInputValue((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->setAngleInputValue((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->setActionButtonValue(); break;
+        case 0: _t->speedSliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->angleSliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->actionButtonClicked(); break;
         default: ;
         }
     }
