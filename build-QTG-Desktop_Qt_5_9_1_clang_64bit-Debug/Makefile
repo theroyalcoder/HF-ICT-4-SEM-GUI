@@ -59,7 +59,8 @@ SOURCES       = ../QTG/main.cpp \
 		../QTG/player.cpp \
 		../QTG/shoot.cpp \
 		../QTG/thread.cpp \
-		../QTG/collisiondetection.cpp moc_mainwindow.cpp \
+		../QTG/collisiondetection.cpp \
+		../QTG/constants.cpp moc_mainwindow.cpp \
 		moc_mainwidget.cpp \
 		moc_gamearea.cpp \
 		moc_thread.cpp
@@ -73,6 +74,7 @@ OBJECTS       = main.o \
 		shoot.o \
 		thread.o \
 		collisiondetection.o \
+		constants.o \
 		moc_mainwindow.o \
 		moc_mainwidget.o \
 		moc_gamearea.o \
@@ -270,7 +272,8 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../QTG/player.h \
 		../QTG/shoot.h \
 		../QTG/thread.h \
-		../QTG/collisiondetection.h ../QTG/main.cpp \
+		../QTG/collisiondetection.h \
+		../QTG/constants.h ../QTG/main.cpp \
 		../QTG/mainwindow.cpp \
 		../QTG/mainwidget.cpp \
 		../QTG/gamearea.cpp \
@@ -279,7 +282,8 @@ DIST          = ../../../Qt/5.9.1/clang_64/mkspecs/features/spec_pre.prf \
 		../QTG/player.cpp \
 		../QTG/shoot.cpp \
 		../QTG/thread.cpp \
-		../QTG/collisiondetection.cpp
+		../QTG/collisiondetection.cpp \
+		../QTG/constants.cpp
 QMAKE_TARGET  = QTG
 DESTDIR       = 
 TARGET        = QTG.app/Contents/MacOS/QTG
@@ -706,8 +710,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/gameobejct.h ../QTG/obstacle.h ../QTG/player.h ../QTG/shoot.h ../QTG/thread.h ../QTG/collisiondetection.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/gameobejct.cpp ../QTG/obstacle.cpp ../QTG/player.cpp ../QTG/shoot.cpp ../QTG/thread.cpp ../QTG/collisiondetection.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/gameobejct.h ../QTG/obstacle.h ../QTG/player.h ../QTG/shoot.h ../QTG/thread.h ../QTG/collisiondetection.h ../QTG/constants.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/gameobejct.cpp ../QTG/obstacle.cpp ../QTG/player.cpp ../QTG/shoot.cpp ../QTG/thread.cpp ../QTG/collisiondetection.cpp ../QTG/constants.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -936,6 +940,7 @@ gamearea.o: ../QTG/gamearea.cpp ../QTG/gamearea.h \
 		../QTG/thread.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QThread \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qthread.h \
+		../QTG/constants.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamearea.o ../QTG/gamearea.cpp
@@ -962,6 +967,7 @@ obstacle.o: ../QTG/obstacle.cpp ../QTG/obstacle.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../QTG/constants.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obstacle.o ../QTG/obstacle.cpp
@@ -973,7 +979,8 @@ player.o: ../QTG/player.cpp ../QTG/player.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
-		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../QTG/constants.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../QTG/player.cpp
 
 shoot.o: ../QTG/shoot.cpp ../QTG/shoot.h \
@@ -983,7 +990,10 @@ shoot.o: ../QTG/shoot.cpp ../QTG/shoot.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
-		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
+		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../QTG/constants.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shoot.o ../QTG/shoot.cpp
 
 thread.o: ../QTG/thread.cpp ../QTG/thread.h \
@@ -1000,6 +1010,11 @@ collisiondetection.o: ../QTG/collisiondetection.cpp ../QTG/collisiondetection.h 
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/QPainter \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/Headers/qpainter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o collisiondetection.o ../QTG/collisiondetection.cpp
+
+constants.o: ../QTG/constants.cpp ../QTG/constants.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o constants.o ../QTG/constants.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
