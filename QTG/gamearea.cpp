@@ -4,17 +4,19 @@
 #include "player.h"
 #include "shoot.h"
 #include "thread.h"
+#include "constants.h"
 
 #include <QDebug>
 #include <QPainter>
 #include <QWidget>
+#include <QString>
 
 GameArea::GameArea(QWidget *parent) : QWidget(parent)
 {
     qDebug() << "GameArea Constructor";
 
     //Background
-    QImage img("/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG/0_img/background 2.jpg");
+    QImage img(constants::ImgFolder + "background.jpg");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
     Thread *t = new Thread();

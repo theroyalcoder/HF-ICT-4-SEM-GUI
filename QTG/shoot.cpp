@@ -1,10 +1,12 @@
 #include "shoot.h"
 #include "gameobejct.h"
+#include "constants.h"
+
 #include <cmath>
 #include <QDebug>
 
 Shoot::Shoot(int x, int y, int speed, int angle)
-    : GameObject(x, y, "/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG/0_img/shoot.png", 100)
+    : GameObject(x, y,constants::ImgFolder + "banana.png", 100)
 {
     t = 0;
     this->speed = speed;

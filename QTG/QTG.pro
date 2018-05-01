@@ -33,7 +33,8 @@ SOURCES += \
     player.cpp \
     shoot.cpp \
     thread.cpp \
-    collisiondetection.cpp
+    collisiondetection.cpp \
+    constants.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,4 +45,5 @@ HEADERS += \
     player.h \
     shoot.h \
     thread.h \
-    collisiondetection.h
+    collisiondetection.h \
+    constants.h
