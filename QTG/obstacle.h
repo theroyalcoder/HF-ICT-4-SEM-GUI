@@ -8,6 +8,7 @@ class Obstacle : public GameObject
 private:
     bool rauf;
     bool runter;
+
 public:
     Obstacle(int x, int y);
     virtual void move();

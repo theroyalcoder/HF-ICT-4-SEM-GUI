@@ -14,7 +14,6 @@ Obstacle::Obstacle(int x, int y)
 
 void Obstacle::move()
 {
-
     GameArea ga;
     if(rauf){
         if(y + 120 < ga.getHeight()){
@@ -26,7 +25,7 @@ void Obstacle::move()
         }
     }
     if(runter){
-    if(y - 200 > 0){
+    if(y > 0){
         y -=5;
     }
     else{

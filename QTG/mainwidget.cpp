@@ -19,12 +19,9 @@
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
+    ,speed(0),angle(0)
 {
     ga = new GameArea(parent);
-
-//    Initialisation of speed and angle
-    speed = 0;
-    angle = 0;
 
 //    Initialisation of shootSound
     shootSound = new QMediaPlayer();
@@ -53,13 +50,14 @@ void MainWidget::createObjects()
     angleLabel = new QLabel("Angle:");
 
     numberOfShotsInput = new QLineEdit();
+    numberOfShotsInput->setReadOnly(true);
 
     speedInput = new QLineEdit();
-    //speedInput->setReadOnly(true);
+    speedInput->setReadOnly(true);
     speedInput->setText("1");
 
     angleInput = new QLineEdit();
-    //angleInput->setReadOnly(true);
+    angleInput->setReadOnly(true);
     angleInput->setText("0");
 
     actionButton = new QPushButton("Start");
@@ -123,6 +121,53 @@ void MainWidget::connectObjects()
                 this, SLOT(actionButtonClicked()));
 }
 
+void MainWidget::keyPressEvent(QKeyEvent *event)
+{
+    update();
+    if(event->key() == Qt::Key_W){
+        ga->moven(2);
+        //oben
+    }
+    if(event->key() == Qt::Key_S){
+        ga->moven(1);
+        //Unten
+    }
+    if(event->key() == Qt::Key_Space){
+        actionButtonClicked();
+    }
+    if(event->key() == Qt::Key_Q){
+       //speed down
+        if(speed >= 2){
+            speed--;
+            QString s = QString::number(speed);
+            speedInput->setText(s);
+        }
+    }
+    if(event->key() == Qt::Key_E){
+        if(speed <= 99){
+            //speed up
+            speed++;
+            QString s = QString::number(speed);
+            speedInput->setText(s);
+        }
+    }
+    if(event->key() == Qt::Key_A){
+        if(angle >= 1){
+            //angle down
+            angle--;
+            QString s = QString::number(angle);
+            angleInput->setText(s);
+        }
+    }
+    if(event->key() == Qt::Key_D){
+        if(angle <= 89){
+            //angle up
+            angle++;
+            QString s = QString::number(angle);
+            angleInput->setText(s);
+        }
+    }
+}
 void MainWidget::speedSliderMoved(int value)
 {
     //qDebug() << "SpeedSlider Value: " << value;

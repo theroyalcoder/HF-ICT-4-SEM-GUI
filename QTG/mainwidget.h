@@ -50,6 +50,7 @@ private:
 
 public:
     MainWidget(QWidget *parent = 0, int lspeed = 0, int langle = 0);
+    void keyPressEvent(QKeyEvent *event);
     void onGameFinished();
 
 public slots:

@@ -2,15 +2,15 @@
 
 #include <QThread>
 
-Thread::Thread()
+Thread::Thread(int nspeed)
 {
-
+speed = nspeed;
 }
 
 void Thread::run()
 {
     while(true) {
         emit refresh();
-        msleep(30);
+        msleep(speed);
     }
 }
