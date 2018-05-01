@@ -11,20 +11,28 @@
 #include <QPainter>
 #include <QWidget>
 #include <QString>
+#include <QMediaPlayer>
 
 GameArea::GameArea(QWidget *parent) : QWidget(parent)
 {
-//    qDebug() << "GameArea Constructor";
+    //qDebug() << "GameArea Constructor";
+    bewegung = false;
 
     //Background
     QImage img(constants::ImgFolder + "background.gif");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
+    // play background music
+    QMediaPlayer *bgm = new QMediaPlayer();
+    bgm->setMedia(QUrl("qrc:/sounds/1_audio/start.mp3"));
+    bgm->play();
+
     //Thread
-    Thread *t = new Thread();
+    Thread *t = new Thread(35);
+    Thread *s = new Thread(200);
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
+    QObject::connect(s, SIGNAL(refresh()), this, SLOT(mover()));
     t->start();
-    //    qDebug() << "Thread started";
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
@@ -43,6 +51,30 @@ void GameArea::paintEvent(QPaintEvent *event)
     }
 
     update();
+}
+void GameArea::mover(){
+    //bewegung = false;
+}
+
+void GameArea::moven(int richtung)
+{
+
+    if(richtung == 1){
+        //down
+        int neuy = gameObjects.at(0)->getY();
+        if(neuy+7 <=  height() -200 ){
+            gameObjects.at(0)->setY(neuy+7);
+        }
+
+    }
+
+    if(richtung == 2){
+        //up
+        int neuy = gameObjects.at(0)->getY();
+        if(neuy+7 >=  10){
+        gameObjects.at(0)->setY(neuy-7);
+        }
+    }
 }
 
 void GameArea::startGame()
@@ -70,7 +102,7 @@ void GameArea::startGame()
 void GameArea::shoot(int speed, int angle)
 {
 //    Create Shoot Object and push back to the other GameObjects
-    Shoot *shoot = new Shoot(140, 340, speed, angle);
+    Shoot *shoot = new Shoot(gameObjects.at(0)->getX()+120, gameObjects.at(0)->getY(), speed, angle);
     gameObjects.push_back(shoot);
 }
 
@@ -90,17 +122,16 @@ void GameArea::next()
 
 //    going thru all Game Objects and execute move method
     for (int i = 0; i < gameObjects.size(); i++) {
-        //qDebug() << i;
-
         GameObject *go = gameObjects.at(i);
 
         if(i >= 2){
             if(ka->check(gameObjects.at(i), gameObjects.at(1))){
-                //gameObjects.erase(gameObjects.begin()+2);
+
+//                gameObjects.erase(gameObjects.begin()+2);
 
 //                emit gameFinished();
 
-    //            qDebug() << "    ";
+//                qDebug() << "    ";
             }
             if(ka->outOfRange(gameObjects.at(i))){
                 gameObjects.erase(gameObjects.begin()+2);

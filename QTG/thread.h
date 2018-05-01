@@ -7,9 +7,10 @@ class Thread : public QThread
 {
     Q_OBJECT
 public:
-    Thread();
+    Thread(int nspeed);
     void run();
-
+private:
+    int speed;
 signals:
     void refresh();
 };
