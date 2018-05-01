@@ -16,6 +16,8 @@
 #include <QtMultimedia/QSound>
 #include <QMediaPlayer>
 #include <QUrl>
+#include <QMessageBox>
+#include <QApplication>
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
@@ -38,7 +40,17 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 
 void MainWidget::onGameFinished()
 {
+//    Hier MessageBox implementieren
 
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, "You won!", "Do you want to start a new Game?",
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+        qDebug() << "Yes was clicked";
+      } else {
+          qDebug() << "Yes was *not* clicked";
+          QApplication::quit();
+      }
 }
 
 void MainWidget::createObjects()
@@ -121,6 +133,11 @@ void MainWidget::connectObjects()
     QObject::connect(
                 actionButton, SIGNAL(clicked()),
                 this, SLOT(actionButtonClicked()));
+
+    //GameFinished
+    QObject::connect(
+                ga, SIGNAL(gameFinished()),
+                this, SLOT(onGameFinished()));
 }
 
 void MainWidget::speedSliderMoved(int value)

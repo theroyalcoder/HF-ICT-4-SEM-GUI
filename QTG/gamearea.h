@@ -33,7 +33,7 @@ public:
     int getWidth();
     int getHeight();
 
-protected:
+signals:
     void gameFinished();
 
 public slots:

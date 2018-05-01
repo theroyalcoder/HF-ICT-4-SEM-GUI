@@ -14,7 +14,7 @@
 
 GameArea::GameArea(QWidget *parent) : QWidget(parent)
 {
-    qDebug() << "GameArea Constructor";
+//    qDebug() << "GameArea Constructor";
 
     //Background
     QImage img(constants::ImgFolder + "background.gif");
@@ -24,7 +24,7 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
     Thread *t = new Thread();
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
     t->start();
-    qDebug() << "Thread started";
+    //    qDebug() << "Thread started";
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
@@ -86,9 +86,7 @@ int GameArea::getHeight()
 
 void GameArea::next()
 {
-
     CollisionDetection *ka = new CollisionDetection();
-    bool getroffen = false;
 
 //    going thru all Game Objects and execute move method
     for (int i = 0; i < gameObjects.size(); i++) {
@@ -96,23 +94,18 @@ void GameArea::next()
 
         GameObject *go = gameObjects.at(i);
 
-        update();
         if(i >= 2){
-        if(i != 0 || i != 1){
-            getroffen = ka->check(gameObjects.at(i), gameObjects.at(1));
-        }
-        if(!getroffen){
+            if(ka->check(gameObjects.at(i), gameObjects.at(1))){
                 //gameObjects.erase(gameObjects.begin()+2);
 
-            qDebug() << "    ";
-        }
+//                emit gameFinished();
 
-        if(ka->outOfRange(gameObjects.at(i))){
-            gameObjects.erase(gameObjects.begin()+2);
+    //            qDebug() << "    ";
+            }
+            if(ka->outOfRange(gameObjects.at(i))){
+                gameObjects.erase(gameObjects.begin()+2);
+            }
         }
-
-        }
-        update();
         go->move();
 }
 

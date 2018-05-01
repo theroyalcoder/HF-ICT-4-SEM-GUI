@@ -50,12 +50,12 @@ private:
 
 public:
     MainWidget(QWidget *parent = 0, int lspeed = 0, int langle = 0);
-    void onGameFinished();
 
 public slots:
     void speedSliderMoved(int value);
     void angleSliderMoved(int value);
     void actionButtonClicked();
+    void onGameFinished();
 };
 
 #endif // MAINWIDGET_H
