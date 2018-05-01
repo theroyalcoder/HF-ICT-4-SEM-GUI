@@ -36,6 +36,7 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
 
 void GameArea::paintEvent(QPaintEvent *event)
 {
+    update();
 //    qDebug() << "GameArea paintEvent started";
     QPainter painter(this);
 
@@ -45,6 +46,7 @@ void GameArea::paintEvent(QPaintEvent *event)
     for (GameObject *x : gameObjects) {
         x->paint(&painter);
     }
+    update();
 
 //    for (int i = 0; i < gameObjects.size(); i++) {
 //        GameObject *go = gameObjects.at(i);
@@ -74,22 +76,33 @@ void GameArea::shoot(int speed, int angle)
 {
     Shoot *shoot = new Shoot(150, 190, speed, angle);
     gameObjects.push_back(shoot);
-
-    CollisionDetection *ka = new CollisionDetection();
-    ka->check(shoot, shoot);
 }
 
 void GameArea::next()
 {
+    CollisionDetection *ka = new CollisionDetection();
+    bool getroffen = false;
     for (int i = 0; i < gameObjects.size(); i++) {
-        GameObject *go = gameObjects.at(i);
-        go->move();
-    }
+        //qDebug() << i;
 
-    /*
-    if(ka.check(ssshoot,obst)){
-        //qDebug() << "Getroffen";
-    }
-*/
-    update();
+        GameObject *go = gameObjects.at(i);
+
+        update();
+        if(i >= 2){
+        if(i != 0 || i != 1){
+            getroffen = ka->check(gameObjects.at(i), gameObjects.at(1));
+        }
+        if(!getroffen){
+            qDebug() << "    ";
+        }
+
+        if(ka->outOfRange(gameObjects.at(i))){
+            gameObjects.erase(gameObjects.begin()+2);
+        }
+
+        }
+        update();
+        go->move();
+}
+
 }

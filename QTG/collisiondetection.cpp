@@ -14,26 +14,43 @@ CollisionDetection::CollisionDetection()
 bool CollisionDetection::check(GameObject *go1, GameObject *go2)
 {
     //Hadouken
-    int Hx = go1->getX();
-    int Hy = go1->getY();
-    int Hwidth = go1->width();
-    int Hheight = go1->height();
+    int Hx = go1->getX() - 150;
+    int Hy = go1->getY() - 150;
+
+    int Hwidth = Hx + 10;
+    int Hheight = Hy + 10;
 
     //Gegner
     int Gx = go2->getX();
     int Gy = go2->getY();
-    int Gwidth = go1->width();
-    int Gheight = go1->height();
-/*
-    if((Hx + Hwidth) > Gx){
-        qDebug() << "getroffen";
-        if(Hy < Gy+Gheight && (Hy + Hheight) > Gy){
+
+    int Gwidth = Gx + 10;
+    int Gheight = Gy + 10;
+
+    if(Gx == Hx && Gy == Hy){
+        qDebug() << "Achtung";
+    }
+
+    if((((Hx + Hwidth)) > Gx) && (Hx < (Gx+Gwidth))){
+        if((Hy < (Gy+Gheight)) && ((Hy + Hheight) > Gy)){
+             qDebug() << "getroffen";
              return true;
         }
-        //Achtungnacher rausnehmen
-        return true;
-        //
     }
-*/
+    return false;
+}
+
+bool CollisionDetection::outOfRange(GameObject *go1)
+{
+    int Hx = go1->getX();
+    int Hy = go1->getY();
+
+    if(Hx > 1000 && Hy > 1000){
+        return true;
+    }
+    else if(Hx > 1000+ 2000){
+        return true;
+    }
+    else if((Hy > 1000+ 2000))
     return false;
 }
