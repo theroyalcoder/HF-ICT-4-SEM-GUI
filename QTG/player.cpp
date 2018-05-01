@@ -10,5 +10,5 @@ Player::Player(int x, int y)
 
 void Player::move()
 {
-    //    todo: implement
+    //leer lassen (player bewegt sich nicht)
 }
