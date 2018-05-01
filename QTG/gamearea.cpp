@@ -18,47 +18,46 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
     qDebug() << "GameArea Constructor";
 
     //Background
-    QImage img(constants::ImgFolder + "background.jpg");
+    QImage img(constants::ImgFolder + "background.gif");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
+<<<<<<< HEAD
     //QTsound
     //QSound bells("mysounds/bells.wav");
     //bells.play();
 
+=======
+>>>>>>> 4322297b1b2ff39c9f6a1bc7298c8efe14712cb6
     //Thread
     Thread *t = new Thread();
-
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
-
     t->start();
     qDebug() << "Thread started";
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
 {
-//    qDebug() << "GameArea paintEvent started";
+//    Creating QPainter
     QPainter painter(this);
 
     //Draw background
     painter.drawImage(0, 0, *backgroundImg);
 
+//    Draw gameObjects (Player, Obstacle)
     for (GameObject *x : gameObjects) {
         x->paint(&painter);
     }
-
-//    for (int i = 0; i < gameObjects.size(); i++) {
-//        GameObject *go = gameObjects.at(i);
-//        go->paint(painter);
-//    }
 }
 
 void GameArea::startGame()
 {
+//    Create Player
     Player *player = new Player(0, 195);
     gameObjects.push_back(player);
 
     srand(time(NULL));
 
+//    Create Obstacle Objects on a randomized place
     int x, y, w;
     w = width();
     x = rand() % (w / 4) + 3 * w / 4 - 50;
@@ -67,11 +66,13 @@ void GameArea::startGame()
     Obstacle *obst = new Obstacle(x, y);
     gameObjects.push_back(obst);
 
+//    update
     this->update();
 }
 
 void GameArea::shoot(int speed, int angle)
 {
+//    Create Shoot Object and push back to the other GameObjects
     Shoot *shoot = new Shoot(150, 190, speed, angle);
     gameObjects.push_back(shoot);
 
@@ -81,15 +82,20 @@ void GameArea::shoot(int speed, int angle)
 
 void GameArea::next()
 {
+//    going thru all Game Objects and execute move method
     for (int i = 0; i < gameObjects.size(); i++) {
         GameObject *go = gameObjects.at(i);
         go->move();
     }
 
+<<<<<<< HEAD
     /*
     if(ka.check(ssshoot,obst)){
         //qDebug() << "Getroffen";
     }
 */
+=======
+//    update
+>>>>>>> 4322297b1b2ff39c9f6a1bc7298c8efe14712cb6
     update();
 }
