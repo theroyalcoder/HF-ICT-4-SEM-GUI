@@ -11,7 +11,6 @@
 #include <QPainter>
 #include <QWidget>
 #include <QString>
-//#include <QSound>
 
 GameArea::GameArea(QWidget *parent) : QWidget(parent)
 {
@@ -20,11 +19,6 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
     //Background
     QImage img(constants::ImgFolder + "background.gif");
     backgroundImg = new QImage(img.scaledToWidth(1000));
-
-
-    //QTsound
-    //QSound bells("mysounds/bells.wav");
-    //bells.play();
 
     //Thread
     Thread *t = new Thread();

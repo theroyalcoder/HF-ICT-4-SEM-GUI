@@ -60,7 +60,8 @@ SOURCES       = ../QTG/main.cpp \
 		../QTG/shoot.cpp \
 		../QTG/thread.cpp \
 		../QTG/collisiondetection.cpp \
-		../QTG/constants.cpp moc_mainwindow.cpp \
+		../QTG/constants.cpp qrc_res.cpp \
+		moc_mainwindow.cpp \
 		moc_mainwidget.cpp \
 		moc_gamearea.cpp \
 		moc_thread.cpp
@@ -75,6 +76,7 @@ OBJECTS       = main.o \
 		thread.o \
 		collisiondetection.o \
 		constants.o \
+		qrc_res.o \
 		moc_mainwindow.o \
 		moc_mainwidget.o \
 		moc_gamearea.o \
@@ -487,6 +489,7 @@ Makefile: ../QTG/QTG.pro ../../../Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.con
 		../../../Qt/5.9.1/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.9.1/clang_64/mkspecs/features/lex.prf \
 		../QTG/QTG.pro \
+		../QTG/res.qrc \
 		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/QtMultimedia.prl \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../Qt/5.9.1/clang_64/lib/QtGui.framework/QtGui.prl \
@@ -679,6 +682,7 @@ Makefile: ../QTG/QTG.pro ../../../Qt/5.9.1/clang_64/mkspecs/macx-clang/qmake.con
 ../../../Qt/5.9.1/clang_64/mkspecs/features/yacc.prf:
 ../../../Qt/5.9.1/clang_64/mkspecs/features/lex.prf:
 ../QTG/QTG.pro:
+../QTG/res.qrc:
 ../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/QtMultimedia.prl:
 ../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../Qt/5.9.1/clang_64/lib/QtGui.framework/QtGui.prl:
@@ -713,6 +717,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../QTG/res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.9.1/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../QTG/mainwindow.h ../QTG/mainwidget.h ../QTG/gamearea.h ../QTG/gameobejct.h ../QTG/obstacle.h ../QTG/player.h ../QTG/shoot.h ../QTG/thread.h ../QTG/collisiondetection.h ../QTG/constants.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../QTG/main.cpp ../QTG/mainwindow.cpp ../QTG/mainwidget.cpp ../QTG/gamearea.cpp ../QTG/gameobejct.cpp ../QTG/obstacle.cpp ../QTG/player.cpp ../QTG/shoot.cpp ../QTG/thread.cpp ../QTG/collisiondetection.cpp ../QTG/constants.cpp $(DISTDIR)/
@@ -739,8 +744,15 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_res.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_res.cpp
+qrc_res.cpp: ../QTG/res.qrc \
+		../../../Qt/5.9.1/clang_64/bin/rcc \
+		../QTG/1_audio/shoot_playermusic.mp3 \
+		../QTG/1_audio/start.mp3
+	/Users/anuuthomson/Qt/5.9.1/clang_64/bin/rcc -name res ../QTG/res.qrc -o qrc_res.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -782,6 +794,10 @@ moc_mainwidget.cpp: ../QTG/gamearea.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/QMediaPlayer \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/qmediaplayer.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QUrl \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qurl.h \
 		../QTG/mainwidget.h \
 		moc_predefs.h \
 		../../../Qt/5.9.1/clang_64/bin/moc
@@ -825,7 +841,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -858,6 +874,10 @@ main.o: ../QTG/main.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/QMediaPlayer \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/qmediaplayer.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QUrl \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qurl.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../QTG/main.cpp
@@ -890,7 +910,11 @@ mainwindow.o: ../QTG/mainwindow.cpp ../QTG/mainwindow.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QLabel \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
-		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h
+		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/QMediaPlayer \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/qmediaplayer.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QUrl \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qurl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QTG/mainwindow.cpp
 
 mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
@@ -919,6 +943,10 @@ mainwidget.o: ../QTG/mainwidget.cpp ../QTG/mainwidget.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QInputDialog \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qinputdialog.h \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/QMediaPlayer \
+		../../../Qt/5.9.1/clang_64/lib/QtMultimedia.framework/Headers/qmediaplayer.h \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QUrl \
+		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qurl.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
 		../../../Qt/5.9.1/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
@@ -1025,6 +1053,9 @@ constants.o: ../QTG/constants.cpp ../QTG/constants.h \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/QString \
 		../../../Qt/5.9.1/clang_64/lib/QtCore.framework/Headers/qstring.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o constants.o ../QTG/constants.cpp
+
+qrc_res.o: qrc_res.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_res.o qrc_res.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

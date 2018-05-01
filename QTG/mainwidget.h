@@ -11,6 +11,9 @@
 #include <QLabel>
 #include <QInputDialog>
 #include <QString>
+#include <QtMultimedia/QSound>
+#include <QMediaPlayer>
+#include <QUrl>
 
 class MainWidget : public QWidget
 {
@@ -19,6 +22,8 @@ private:
     QString numberOfShots = "-1";
     int speed;
     int angle;
+
+    QMediaPlayer *shootSound;
 
     QSlider *angleSlider;
     QSlider *speedSlider;

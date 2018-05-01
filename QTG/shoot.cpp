@@ -6,7 +6,7 @@
 #include <QDebug>
 
 Shoot::Shoot(int x, int y, int speed, int angle)
-    : GameObject(x, y,constants::ImgFolder + "banana.png", 100)
+    : GameObject(x, y,constants::ImgFolder + "shoot.png", 100)
 {
     t = 0;
     this->speed = speed;

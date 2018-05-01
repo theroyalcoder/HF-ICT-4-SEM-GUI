@@ -6,7 +6,7 @@
 #include <QDebug>
 
 Obstacle::Obstacle(int x, int y)
-    : GameObject(x, y,constants::ImgFolder + "ballon.png", 105)
+    : GameObject(x, y,constants::ImgFolder + "obstacle.png", 105)
 {
 }
 

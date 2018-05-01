@@ -13,6 +13,9 @@
 #include <QDebug>
 #include <QSlider>
 #include <QPaintEvent>
+#include <QtMultimedia/QSound>
+#include <QMediaPlayer>
+#include <QUrl>
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
@@ -22,6 +25,10 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 //    Initialisation of speed and angle
     speed = 0;
     angle = 0;
+
+//    Initialisation of shootSound
+    shootSound = new QMediaPlayer();
+    shootSound->setMedia(QUrl("qrc:/sounds/1_audio/shoot_playermusic.mp3"));
 
     createObjects();
     createLayout();
@@ -148,6 +155,7 @@ void MainWidget::actionButtonClicked()
         actionButton->setText("Shoot");
         ga->startGame();
     } else {
+        shootSound->play();
         ga->shoot(speed, angle);
     }
 }
