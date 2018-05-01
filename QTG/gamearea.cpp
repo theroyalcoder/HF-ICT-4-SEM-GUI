@@ -14,7 +14,7 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
     qDebug() << "GameArea Constructor";
 
     //Background
-    QImage img("/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG/0_img/background.gif");
+    QImage img("/Users/anuuthomson/QtProjects/HF-ICT-4-SEM-GUI/QTG/0_img/background 2.jpg");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
     Thread *t = new Thread();
@@ -27,7 +27,7 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
 
 void GameArea::paintEvent(QPaintEvent *event)
 {
-    qDebug() << "GameArea paintEvent started";
+//    qDebug() << "GameArea paintEvent started";
     QPainter painter(this);
 
     //Draw background
@@ -36,7 +36,6 @@ void GameArea::paintEvent(QPaintEvent *event)
     for (GameObject *x : gameObjects) {
         x->paint(&painter);
     }
-
 
 //    for (int i = 0; i < gameObjects.size(); i++) {
 //        GameObject *go = gameObjects.at(i);
@@ -48,6 +47,8 @@ void GameArea::startGame()
 {
     Player *player = new Player(0, 195);
     gameObjects.push_back(player);
+
+    srand(time(NULL));
 
     int x, y, w;
     w = width();

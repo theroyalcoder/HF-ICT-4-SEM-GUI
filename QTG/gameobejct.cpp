@@ -20,7 +20,7 @@ GameObject::GameObject(int x, int y, QString imgPath, int width)
 
 void GameObject::paint(QPainter *painter)
 {
-    qDebug() << "GameObject paint methode";
+//    qDebug() << "GameObject paint methode";
 
     painter->drawImage(this->getX(), this->getY(), *img);
 }
