@@ -21,7 +21,6 @@ class GameArea : public QWidget
 private:
     QImage *backgroundImg;
     vector<GameObject *> gameObjects;
-
 public:
     GameArea(QWidget *parent = 0);
     void paintEvent(QPaintEvent *event);

@@ -11,6 +11,6 @@ void Thread::run()
 {
     while(true) {
         emit refresh();
-        msleep(200);
+        msleep(35);
     }
 }
