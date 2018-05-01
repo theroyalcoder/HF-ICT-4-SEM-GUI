@@ -17,7 +17,7 @@
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
 {
-    qDebug() << "Create MainWidget";
+    //qDebug() << "Create MainWidget";
     ga = new GameArea(parent);
 
     speed = 0;
@@ -31,7 +31,7 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 void MainWidget::createObjects()
 {
     //1. Create Objects
-    qDebug() << "Create Objects";
+    //qDebug() << "Create Objects";
     titleLabel = new QLabel("<h1>QTG</h1>");
     titleLabel->setGeometry(0, 0, 10, 10);
 
@@ -60,7 +60,7 @@ void MainWidget::createObjects()
 
 void MainWidget::createLayout()
 {
-    qDebug() << "Create Layout";
+    //qDebug() << "Create Layout";
 
     //2. Create Layout
     QVBoxLayout *vAll = new QVBoxLayout();
@@ -94,7 +94,7 @@ void MainWidget::createLayout()
 
 void MainWidget::connectObjects()
 {
-    qDebug() << "Connect Objects";
+    //qDebug() << "Connect Objects";
 
     //Speedsilder
     QObject::connect(
@@ -114,8 +114,8 @@ void MainWidget::connectObjects()
 
 void MainWidget::speedSliderMoved(int value)
 {
-    qDebug() << "speedSliderMoved" << endl;
-    qDebug() << value;
+    //qDebug() << "speedSliderMoved" << endl;
+    //qDebug() << value;
 
     speed = value;
 
@@ -125,8 +125,8 @@ void MainWidget::speedSliderMoved(int value)
 
 void MainWidget::angleSliderMoved(int value)
 {
-    qDebug() << "angleSliderMoved" << endl;
-    qDebug() << value;
+    //qDebug() << "angleSliderMoved" << endl;
+    //qDebug() << value;
 
     angle = value;
 
@@ -137,7 +137,7 @@ void MainWidget::angleSliderMoved(int value)
 
 void MainWidget::actionButtonClicked()
 {
-    qDebug() << "actionButtonClicked" << endl;
+    //qDebug() << "actionButtonClicked" << endl;
     actionButton->setText("Shoot");
 
     numberOfShots = numberOfShots + 1;

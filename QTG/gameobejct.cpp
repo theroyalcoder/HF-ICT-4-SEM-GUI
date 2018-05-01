@@ -9,7 +9,7 @@
 
 GameObject::GameObject(int x, int y, QString imgPath, int width)
 {
-    qDebug() << "GameObject created";
+    //qDebug() << "GameObject created";
 
     this->setX(x);
     this->setY(y);

@@ -5,11 +5,13 @@
 #include "shoot.h"
 #include "thread.h"
 #include "constants.h"
+#include "collisiondetection.h"
 
 #include <QDebug>
 #include <QPainter>
 #include <QWidget>
 #include <QString>
+//#include <QSound>
 
 GameArea::GameArea(QWidget *parent) : QWidget(parent)
 {
@@ -19,6 +21,11 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent)
     QImage img(constants::ImgFolder + "background.jpg");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
+    //QTsound
+    //QSound bells("mysounds/bells.wav");
+    //bells.play();
+
+    //Thread
     Thread *t = new Thread();
 
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
@@ -67,6 +74,9 @@ void GameArea::shoot(int speed, int angle)
 {
     Shoot *shoot = new Shoot(150, 190, speed, angle);
     gameObjects.push_back(shoot);
+
+    CollisionDetection *ka = new CollisionDetection();
+    ka->check(shoot, shoot);
 }
 
 void GameArea::next()
@@ -75,5 +85,11 @@ void GameArea::next()
         GameObject *go = gameObjects.at(i);
         go->move();
     }
+
+    /*
+    if(ka.check(ssshoot,obst)){
+        //qDebug() << "Getroffen";
+    }
+*/
     update();
 }
