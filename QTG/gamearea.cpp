@@ -157,3 +157,17 @@ void GameArea::next()
 //    update
     update();
 }
+
+
+/*
+QMessageBox::StandardButton reply;
+  reply = QMessageBox::question(this, "Test", "Quit?",
+                                QMessageBox::Yes|QMessageBox::No);
+  if (reply == QMessageBox::Yes) {
+    qDebug() << "Yes was clicked";
+    QApplication::quit();
+  } else {
+    qDebug() << "Yes was *not* clicked";
+  }
+}
+*/
