@@ -7,7 +7,7 @@
 #include <QPainter>
 #include <QImage>
 
-GameObject::GameObject(int x, int y, QString imgPath, int width)
+GameObject::GameObject(int x, int y, QString imgPath, int width):richtung(0)
 {
     this->setX(x);
     this->setY(y);
@@ -19,6 +19,17 @@ GameObject::GameObject(int x, int y, QString imgPath, int width)
 void GameObject::paint(QPainter *painter)
 {
     painter->drawImage(this->getX(), this->getY(), *img);
+}
+
+void GameObject::setRichtung(int nrichtung)
+{
+   qDebug() << richtung;
+   richtung = nrichtung;
+}
+
+int GameObject::getRichtung()
+{
+     return richtung;
 }
 
 //Getter and Setter methods

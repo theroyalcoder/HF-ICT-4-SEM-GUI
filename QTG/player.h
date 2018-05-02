@@ -5,8 +5,10 @@
 
 class Player : public GameObject
 {
+private:
+
 public:
-    Player(int x, int y);
+    Player(int x, int y, int richtung, int heightGA);
     virtual void move();
 };
 

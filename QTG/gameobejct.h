@@ -14,6 +14,9 @@ public:
     virtual void move() = 0;
     void paint(QPainter *painter);
 
+    void setRichtung(int richtung);
+    int getRichtung();
+
     int getX() const;
     void setX(int value);
     int getY() const;
@@ -25,6 +28,10 @@ public:
 protected:
     int x;
     int y;
+    //erweitert
+    int richtung;
+    int widthGA;
+    int heightGA;
 };
 
 #endif // GAMEOBEJCT_H

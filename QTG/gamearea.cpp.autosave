@@ -120,7 +120,6 @@ int GameArea::getHeight()
 void GameArea::next()
 {   
     bool getroffen = false;
-
 //    going thru all Game Objects and execute move method
     for (int i = 0; i < gameObjects.size(); i++) {
         GameObject *go = gameObjects.at(i);

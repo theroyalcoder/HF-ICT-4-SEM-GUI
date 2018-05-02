@@ -9,6 +9,7 @@
 #include <QString>
 #include <QWidget>
 
+#include "collisiondetection.h"
 #include "obstacle.h"
 #include "player.h"
 #include "shoot.h"
@@ -22,6 +23,10 @@ private:
     QImage *backgroundImg;
     vector<GameObject *> gameObjects;
     bool bewegung;
+    CollisionDetection *ka;
+    int LebenSpieler;
+    int LebenGegner;
+    bool gamestart;
 
 public:
     GameArea(QWidget *parent = 0);

@@ -124,6 +124,7 @@ void MainWidget::connectObjects()
 void MainWidget::keyPressEvent(QKeyEvent *event)
 {
     update();
+    if(numberOfShots >= 0){
     if(event->key() == Qt::Key_W){
         ga->moven(2);
         //oben
@@ -132,6 +133,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         ga->moven(1);
         //Unten
     }
+    }
     if(event->key() == Qt::Key_Space){
         actionButtonClicked();
     }
@@ -139,6 +141,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
        //speed down
         if(speed >= 2){
             speed--;
+            speedSlider->setValue(speed);
             QString s = QString::number(speed);
             speedInput->setText(s);
         }
@@ -147,6 +150,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         if(speed <= 99){
             //speed up
             speed++;
+            speedSlider->setValue(speed);
             QString s = QString::number(speed);
             speedInput->setText(s);
         }
@@ -155,6 +159,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         if(angle >= 1){
             //angle down
             angle--;
+            angleSlider->setValue(angle);
             QString s = QString::number(angle);
             angleInput->setText(s);
         }
@@ -163,6 +168,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         if(angle <= 89){
             //angle up
             angle++;
+            angleSlider->setValue(angle);
             QString s = QString::number(angle);
             angleInput->setText(s);
         }

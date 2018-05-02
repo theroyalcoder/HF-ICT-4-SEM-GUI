@@ -35,17 +35,20 @@ bool CollisionDetection::check(GameObject *go1, GameObject *go2)
     return false;
 }
 
-bool CollisionDetection::outOfRange(GameObject *go1)
+bool CollisionDetection::outOfRange(GameObject *go1,int height,int width)
 {
     int Hx = go1->getX();
     int Hy = go1->getY();
 
-    if(Hx > 1000 && Hy > 1000){
+    if(Hx > width && Hy > height){
         return true;
     }
-    else if(Hx > 1000+ 2000){
+    else if(Hx > width + 400){
         return true;
     }
-    else if((Hy > 1000+ 2000))
+    else if((Hy > height+ 400)){
+        return true;
+    }
+        //qDebug() <<Hy<< " :Hy > height+ 400 : " << height+ 400;
     return false;
 }

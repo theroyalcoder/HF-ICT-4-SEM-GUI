@@ -8,7 +8,7 @@ class CollisionDetection
 public:
     CollisionDetection();
     bool check(GameObject *go1, GameObject *go2);
-    bool outOfRange(GameObject *go1);
+    bool outOfRange(GameObject *go1,int ,int);
 };
 
 #endif // COLLISIONDETECTION_H
