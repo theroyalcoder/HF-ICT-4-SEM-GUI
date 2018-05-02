@@ -120,29 +120,25 @@ int GameArea::getHeight()
 void GameArea::next()
 {   
     bool getroffen = false;
-
 //    going thru all Game Objects and execute move method
     for (int i = 0; i < gameObjects.size(); i++) {
         GameObject *go = gameObjects.at(i);
         update();
         if(i >= 2){
-        if(i != 0 || i != 1){
-            getroffen = ka->check(gameObjects.at(i), gameObjects.at(1));
-        }
-        if(getroffen){
-            LebenGegner -= 10;
+            if(i != 0 || i != 1){
+                getroffen = ka->check(gameObjects.at(i), gameObjects.at(1));
+            }
+            if(getroffen){
+                LebenGegner -= 10;
 
                 //gameObjects.erase(gameObjects.begin()+2);
 
             //qDebug() << "getroffen";
-        }
-
-        if(ka->outOfRange(gameObjects.at(i),height(),width())){
-            //qDebug() << "out of range";
-            gameObjects.erase(gameObjects.begin()+2);
-        }
-
-
+            }
+            if(ka->outOfRange(gameObjects.at(i),height(),width())){
+                //qDebug() << "out of range";
+                gameObjects.erase(gameObjects.begin()+2);
+            }
         }
         if(LebenGegner <= 0){
             //gameFinished();
