@@ -137,12 +137,13 @@ void GameArea::next()
 
         if(count == 2){
             if(collisionControl->check(gameObject, gameObjects.at(1))){
-                LifeOpponent -= 5;
+//                Auf 5 ändern
+                LifeOpponent -= 500;
             }
 
             if(collisionControl->outOfRange(gameObject, height(), width())){
                 //qDebug() << "out of range";
-                gameObjects.erase(gameObjects.begin()+2);
+                gameObjects.erase(gameObjects.begin() + 2);
             }
 
             if(LifeOpponent <= 0){
@@ -150,7 +151,6 @@ void GameArea::next()
                 gameFinished();
                 qDebug() << once;
                 //checkOnce();
-
             }
 
             if(LifePlayers <= 0){

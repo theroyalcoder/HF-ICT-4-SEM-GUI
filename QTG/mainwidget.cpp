@@ -43,26 +43,6 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     connectObjects();
 }
 
-void MainWidget::onGameFinished()
-{
-    QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
-                                    QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes) {
-          ga->once = false;
-//          repaint();
-//          delete ga;
-          //GameArea ga;
-        qDebug() << "Yes was clicked";
-        restart = true;
-//        Restart Game
-        QApplication::allWindows();
-      } else {
-        qDebug() << "Yes was *not* clicked";
-        QApplication::quit();
-      }
-}
-
 void MainWidget::createObjects()
 {
     //1. Create Objects
@@ -164,6 +144,30 @@ void MainWidget::connectObjects()
 
     QObject::connect(, SIGNAL(refresh()),this, SLOT (slotReboot()));
 */
+}
+
+void MainWidget::onGameFinished()
+{
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+//          delete ga;
+//          GameArea *ga;
+          ga->once = false;
+          ga->startGame();
+
+//          repaint();
+
+          //GameArea ga;
+        qDebug() << "Yes was clicked";
+        restart = true;
+//        Restart Game
+        QApplication::allWindows();
+      } else {
+        qDebug() << "Yes was *not* clicked";
+        QApplication::quit();
+      }
 }
 
 void MainWidget::slotReboot()
