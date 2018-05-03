@@ -18,9 +18,8 @@ public:
 
     void paint(QPainter *painter);
 
-    void setRichtung(int richtung);
-    int getRichtung();
-
+    void setDirection(int direction);
+    int getDirection();
     int getX() const;
     void setX(int value);
     int getY() const;
@@ -32,8 +31,8 @@ public:
 protected:
     int x;
     int y;
-    //erweitert
-    int richtung;
+
+    int direction;
     int widthGA;
     int heightGA;
 };

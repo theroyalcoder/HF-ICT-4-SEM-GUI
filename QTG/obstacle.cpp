@@ -8,29 +8,29 @@
 
 Obstacle::Obstacle(int x, int y)
     : GameObject(x, y,constants::ImgFolder + "obstacle.png", 105)
-    ,rauf(true),runter(false)
+    ,up(true),down(false)
 {
 }
 
 void Obstacle::move()
 {
     GameArea ga;
-    if(rauf){
+    if(up){
         if(y + 120 < ga.getHeight()){
             y +=5;
         }
         else{
-            rauf = false;
-            runter = true;
+            up = false;
+            down = true;
         }
     }
-    if(runter){
+    if(down){
     if(y > 0){
         y -=5;
     }
     else{
-        runter = false;
-        rauf = true;
+        down = false;
+        up = true;
     }
     }
 

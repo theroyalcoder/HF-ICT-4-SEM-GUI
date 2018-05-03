@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "gamearea.h"
 #include "thread.h"
+#include "constants.h"
 
 #include <QAction>
 #include <string>
@@ -23,14 +24,13 @@
 #include <QApplication>
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
-    : QWidget(parent)
-    ,speed(0),angle(0),restart(false)
+    : QWidget(parent), speed(0), angle(0), restart(false)
 {
     ga = new GameArea(parent);
 
 //    Initialisation of shootSound
     shootSound = new QMediaPlayer();
-    shootSound->setMedia(QUrl::fromLocalFile("//Users//patrick//Downloads//img//1_audio//shoot_playermusic.mp3"));
+    shootSound->setMedia(QUrl::fromLocalFile(constants::AudioFolder + "start.mp3"));
     shootSound->setVolume(40);
     shootSound->play();
 
@@ -49,7 +49,9 @@ void MainWidget::onGameFinished()
       reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
                                     QMessageBox::Yes|QMessageBox::No);
       if (reply == QMessageBox::Yes) {
-          delete ga;
+          ga->once = false;
+//          repaint();
+//          delete ga;
           //GameArea ga;
         qDebug() << "Yes was clicked";
         restart = true;

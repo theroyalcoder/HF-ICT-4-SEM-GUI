@@ -12,13 +12,11 @@
 #include <QWidget>
 #include <QString>
 
-GameArea::GameArea(QWidget *parent) : QWidget(parent),once(false),gamestart(false)/**/
+GameArea::GameArea(QWidget *parent) : QWidget(parent), gamestart(false), once(false)
 {
+    collisionControl = new CollisionDetection();
+    movement = false;
 
-    //
-    ka = new CollisionDetection();
-    //qDebug() << "GameArea Constructor";
-    bewegung = false;
     //Background
     QImage img(constants::ImgFolder + "background.gif");
     backgroundImg = new QImage(img.scaledToWidth(1000));
@@ -29,9 +27,8 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent),once(false),gamestart(fals
     t->start();
     s->start();
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
-    QObject::connect(s, SIGNAL(refresh()), this, SLOT(mover()));
+    QObject::connect(s, SIGNAL(refresh()), this, SLOT(lifeDeduction()));
 
-    //qDebug() << "Thread started";
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
@@ -44,7 +41,7 @@ void GameArea::paintEvent(QPaintEvent *event)
     //Draw background
     painter.drawImage(0, 0, *backgroundImg);
 
-//    Draw gameObjects (Player, Obstacle)
+//    Draw gameObjects (Player and Obstacle)
     for (GameObject *x : gameObjects) {
         x->paint(&painter);
     }
@@ -53,32 +50,34 @@ void GameArea::paintEvent(QPaintEvent *event)
     //Draw Lebensanzeige
     painter.setPen(QPen(Qt::black,20));
     painter.drawLine(50,70,350,70);
+
     //leben
     painter.setPen(QPen(Qt::red,15));
-    painter.drawLine(50,70,LebenSpieler+50,70);
+    painter.drawLine(50,70,LifePlayers+50,70);
 
     painter.setPen(QPen(Qt::black,20));
     painter.drawLine(620,70,920,70);
     painter.setPen(QPen(Qt::red,15));
-    painter.drawLine(620,70,LebenGegner+620,70);
+    painter.drawLine(620,70,LifeOpponent+620,70);
 }
     update();
 }
-void GameArea::mover(){
-    LebenSpieler -= 5;
+void GameArea::lifeDeduction(){
+    LifePlayers -= 1;
 }
 
-void GameArea::moven(int richtung)
+void GameArea::moven(int direction)
 {
 //Player mover
-    gameObjects.at(0)->setRichtung(richtung);
+    gameObjects.at(0)->setDirection(direction);
 }
 
 void GameArea::startGame()
 {
     gamestart = true;
-    LebenSpieler = 300;
-    LebenGegner = 300;
+    LifePlayers = 300;
+    LifeOpponent = 300;
+
 //    Create Player
     Player *player = new Player(0, 335,0,height());
     gameObjects.push_back(player);
@@ -111,7 +110,6 @@ void GameArea::restarter()
     once = false;
     gamestart = false;
     gameObjects.clear();
-
 }
 
 GameArea::~GameArea()
@@ -119,56 +117,51 @@ GameArea::~GameArea()
     //delete this;
 }
 
-int GameArea::getWidth()
-{
-    return width();
-}
+int GameArea::getWidth() {return width();}
 
-int GameArea::getHeight()
-{
-    return height();
-}
+int GameArea::getHeight() {return height();}
 
 void GameArea::checkOnce()
 {
-    if(once){
-        gameFinished();
-    }
+    if(once) {gameFinished();}
 }
 
 void GameArea::next()
-{   
+{
+    int count = 0;
 
     if(!once){
 //    going thru all Game Objects and execute move method
-    for (int i = 0; i < gameObjects.size(); i++) {
-        GameObject *go = gameObjects.at(i);
-        update();
-        if(i >= 2){
-            if(ka->check(gameObjects.at(i), gameObjects.at(1))){
-                LebenGegner -= 10;
+    for (GameObject *gameObject : gameObjects) {
+        GameObject *go = gameObject;
+
+        if(count == 2){
+            if(collisionControl->check(gameObject, gameObjects.at(1))){
+                LifeOpponent -= 5;
             }
-            if(ka->outOfRange(gameObjects.at(i),height(),width())){
+
+            if(collisionControl->outOfRange(gameObject, height(), width())){
                 //qDebug() << "out of range";
                 gameObjects.erase(gameObjects.begin()+2);
             }
 
-            if(LebenGegner <= 0){
-                once=true;
+            if(LifeOpponent <= 0){
+                once = true;
                 gameFinished();
                 qDebug() << once;
                 //checkOnce();
+
             }
 
-            else if(LebenSpieler <= 0){
-                once=true;
+            if(LifePlayers <= 0){
+                once = true;
                 gameFinished();
-                qDebug() << "verloren";
-                //checkOnce();
             }
         }
         update();
         go->move();
+
+        count++;
     }
 }
 //    update

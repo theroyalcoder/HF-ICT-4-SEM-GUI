@@ -9,8 +9,10 @@ class Thread : public QThread
 public:
     Thread(int nspeed);
     void run();
+
 private:
     int speed;
+
 signals:
     void refresh();
 };

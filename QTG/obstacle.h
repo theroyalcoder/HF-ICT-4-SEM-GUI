@@ -6,8 +6,8 @@
 class Obstacle : public GameObject
 {
 private:
-    bool rauf;
-    bool runter;
+    bool up;
+    bool down;
 
 public:
     Obstacle(int x, int y);
