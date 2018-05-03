@@ -11,20 +11,20 @@
 #include <QLabel>
 #include <QInputDialog>
 #include <QString>
-#include <QtMultimedia/QSound>
-#include <QMediaPlayer>
+//#include <QtMultimedia/QSound>
+//#include <QMediaPlayer>
 #include <QUrl>
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
 private:
-    QString numberOfShots = "-1";
+    int numberOfShots;
     int speed;
     int angle;
     bool restart;
 
-    QMediaPlayer *shootSound;
+    //QMediaPlayer *shootSound;
 
     QSlider *angleSlider;
     QSlider *speedSlider;
@@ -50,6 +50,7 @@ private:
     void createLayout();
     void connectObjects();
 
+    bool init; // For init
 public:
     MainWidget(QWidget *parent = 0, int lspeed = 0, int langle = 0);
     void keyPressEvent(QKeyEvent *event);
@@ -61,6 +62,9 @@ public slots:
     void actionButtonClicked();
     void onGameFinished();
     void slotReboot();
+    void resetGame();
+signals:
+    void restartGame();
 };
 
 #endif // MAINWIDGET_H
