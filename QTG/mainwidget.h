@@ -11,8 +11,8 @@
 #include <QLabel>
 #include <QInputDialog>
 #include <QString>
-//#include <QtMultimedia/QSound>
-//#include <QMediaPlayer>
+#include <QtMultimedia/QSound>
+#include <QMediaPlayer>
 #include <QUrl>
 
 class MainWidget : public QWidget
@@ -24,7 +24,7 @@ private:
     int angle;
     bool restart;
 
-    //QMediaPlayer *shootSound;
+    QMediaPlayer *shootSound;
 
     QSlider *angleSlider;
     QSlider *speedSlider;

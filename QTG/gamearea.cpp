@@ -25,7 +25,7 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent), gamestart(false), once(fa
     Thread *t = new Thread(35);
     Thread *s = new Thread(300);
     t->start();
-    //s->start();
+    s->start();
     QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
     QObject::connect(s, SIGNAL(refresh()), this, SLOT(lifeDeduction()));
 
@@ -60,7 +60,7 @@ void GameArea::paintEvent(QPaintEvent *event)
     }
 }
 void GameArea::lifeDeduction(){
-    LifePlayers -= 1;
+    LifePlayers -= 10;
 }
 
 void GameArea::moven(int direction)
@@ -107,7 +107,6 @@ void GameArea::restarter()
     for(GameObject *obj : gameObjects){
         delete obj;
     }
-    qDebug() << gameObjects.size();
     gameObjects.clear();
 }
 
@@ -132,7 +131,8 @@ void GameArea::next()
         for(int i = 2; i < gameObjects.size(); i++){
             if(collisionControl->check(gameObjects.at(i), gameObjects.at(1))){
                 // Treffer
-                LifeOpponent -= 500;
+                qDebug() << "Treffer";
+                LifeOpponent -= 50;
             }
         }
 
@@ -147,6 +147,7 @@ void GameArea::next()
         }
 
         if(LifeOpponent <= 0){
+            LifeOpponent = 0;
             once = true;
             gameFinished();
             qDebug() << once;
