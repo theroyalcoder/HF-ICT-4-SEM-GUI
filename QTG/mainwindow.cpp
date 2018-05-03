@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     //mw->setWindowTitle("QTG");
     this->setFixedSize(1000, 650);
 }
-
+int const MainWindow::EXIT_CODE_REBOOT = -123456789;
 MainWindow::~MainWindow()
 {
 

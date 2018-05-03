@@ -1,6 +1,9 @@
 #include "mainwidget.h"
+#include "mainwindow.h"
 #include "gamearea.h"
+#include "thread.h"
 
+#include <QAction>
 #include <string>
 #include <QWidget>
 #include <QString>
@@ -16,17 +19,24 @@
 #include <QtMultimedia/QSound>
 #include <QMediaPlayer>
 #include <QUrl>
+#include <QMessageBox>
+#include <QApplication>
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent)
-    ,speed(0),angle(0)
+    ,speed(0),angle(0),restart(false)
 {
     ga = new GameArea(parent);
 
 //    Initialisation of shootSound
     shootSound = new QMediaPlayer();
+    shootSound->setMedia(QUrl::fromLocalFile("//Users//patrick//Downloads//img//1_audio//shoot_playermusic.mp3"));
+    shootSound->setVolume(40);
+    shootSound->play();
+
+
     //shootSound->setMedia(QUrl("qrc:/sounds/1_audio/shoot_playermusic.mp3"));
-    shootSound->setMedia(QUrl("//Users//patrick//Downloads//img//1_audio//shoot_playermusic.mp3"));
+    //shootSound->setMedia(QUrl("//Users//patrick//Downloads//img//1_audio//shoot_playermusic.mp3"));
 
     createObjects();
     createLayout();
@@ -35,7 +45,20 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 
 void MainWidget::onGameFinished()
 {
-
+    QMessageBox::StandardButton reply;
+      reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
+                                    QMessageBox::Yes|QMessageBox::No);
+      if (reply == QMessageBox::Yes) {
+          delete ga;
+          //GameArea ga;
+        qDebug() << "Yes was clicked";
+        restart = true;
+//        Restart Game
+        QApplication::allWindows();
+      } else {
+        qDebug() << "Yes was *not* clicked";
+        QApplication::quit();
+      }
 }
 
 void MainWidget::createObjects()
@@ -61,6 +84,7 @@ void MainWidget::createObjects()
     angleInput->setText("0");
 
     actionButton = new QPushButton("Start");
+    stop = new QPushButton("Stop");
 
     speedSlider = new QSlider(Qt::Horizontal);
     speedSlider->setMinimum(1);
@@ -87,6 +111,7 @@ void MainWidget::createLayout()
     ga->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     hBottom->addWidget(actionButton);
+    hBottom->addWidget(stop);
     hBottom->addWidget(shootsLabel);
     hBottom->addWidget(numberOfShotsInput);
     hBottom->addWidget(speedLabel);
@@ -119,10 +144,47 @@ void MainWidget::connectObjects()
     QObject::connect(
                 actionButton, SIGNAL(clicked()),
                 this, SLOT(actionButtonClicked()));
+
+    //GameFinished
+    QObject::connect(
+                ga, SIGNAL(gameFinished()),
+                this, SLOT(onGameFinished()));
+
+
+    actionReboot = new QAction( this );
+    actionReboot->setText( tr("Restart") );
+    actionReboot->setStatusTip( tr("Restarts the application") );
+    QObject::connect( stop, SIGNAL(clicked()),this, SLOT (slotReboot()));
+
+    /*
+    Thread *t = new Thread(30);
+    t->start();
+
+    QObject::connect(, SIGNAL(refresh()),this, SLOT (slotReboot()));
+*/
 }
 
+void MainWidget::slotReboot()
+{
+    //if(restart == true){
+        qDebug() << "Performing application reboot...";
+        //delete ga;
+        restart = false;
+        qApp->exit( MainWindow::EXIT_CODE_REBOOT);
+    //}
+
+}
 void MainWidget::keyPressEvent(QKeyEvent *event)
 {
+    if(event->key() == Qt::Key_P){
+        //restart = true;
+
+        ga->restarter();
+        speed = 0;
+        angle = 0;
+        restart = false;
+        //slotReboot();
+    }
     update();
     if(numberOfShots >= 0){
     if(event->key() == Qt::Key_W){

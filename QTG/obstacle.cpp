@@ -8,7 +8,7 @@
 
 Obstacle::Obstacle(int x, int y)
     : GameObject(x, y,constants::ImgFolder + "obstacle.png", 105)
-,rauf(true),runter(false)
+    ,rauf(true),runter(false)
 {
 }
 

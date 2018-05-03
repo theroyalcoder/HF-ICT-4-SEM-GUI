@@ -11,7 +11,11 @@ public:
     QImage *img;
 
     GameObject(int x, int y, QString imgPath, int width);
+//    Wenn man den Kopierkonstruktor benutzen will, kommt eine Mledung, dass dieser auf delete gesetzt ist
+    GameObject(GameObject &) = delete;
+    GameObject& operator =(GameObject& ) = delete;
     virtual void move() = 0;
+
     void paint(QPainter *painter);
 
     void setRichtung(int richtung);

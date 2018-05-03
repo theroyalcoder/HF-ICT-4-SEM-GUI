@@ -12,7 +12,7 @@
 #include <QWidget>
 #include <QString>
 
-GameArea::GameArea(QWidget *parent) : QWidget(parent)/**/
+GameArea::GameArea(QWidget *parent) : QWidget(parent),once(false),gamestart(false)/**/
 {
 
     //
@@ -65,7 +65,6 @@ void GameArea::paintEvent(QPaintEvent *event)
     update();
 }
 void GameArea::mover(){
-    //bewegung = false;
     LebenSpieler -= 5;
 }
 
@@ -107,6 +106,19 @@ void GameArea::shoot(int speed, int angle)
     gameObjects.push_back(shoot);
 }
 
+void GameArea::restarter()
+{
+    once = false;
+    gamestart = false;
+    gameObjects.clear();
+
+}
+
+GameArea::~GameArea()
+{
+    //delete this;
+}
+
 int GameArea::getWidth()
 {
     return width();
@@ -117,57 +129,48 @@ int GameArea::getHeight()
     return height();
 }
 
+void GameArea::checkOnce()
+{
+    if(once){
+        gameFinished();
+    }
+}
+
 void GameArea::next()
 {   
-    bool getroffen = false;
+
+    if(!once){
 //    going thru all Game Objects and execute move method
     for (int i = 0; i < gameObjects.size(); i++) {
         GameObject *go = gameObjects.at(i);
         update();
         if(i >= 2){
-            if(i != 0 || i != 1){
-                getroffen = ka->check(gameObjects.at(i), gameObjects.at(1));
-            }
-            if(getroffen){
+            if(ka->check(gameObjects.at(i), gameObjects.at(1))){
                 LebenGegner -= 10;
-
-                //gameObjects.erase(gameObjects.begin()+2);
-
-            //qDebug() << "getroffen";
             }
             if(ka->outOfRange(gameObjects.at(i),height(),width())){
                 //qDebug() << "out of range";
                 gameObjects.erase(gameObjects.begin()+2);
             }
-        }
-        if(LebenGegner <= 0){
-            //gameFinished();
-            qDebug() << "gewonnen";
-        }
 
-        else if(LebenSpieler <= 0){
-            //gameFinished();
-            qDebug() << "verloren";
-        }
+            if(LebenGegner <= 0){
+                once=true;
+                gameFinished();
+                qDebug() << once;
+                //checkOnce();
+            }
 
+            else if(LebenSpieler <= 0){
+                once=true;
+                gameFinished();
+                qDebug() << "verloren";
+                //checkOnce();
+            }
+        }
         update();
         go->move();
+    }
 }
-
 //    update
     update();
 }
-
-
-/*
-QMessageBox::StandardButton reply;
-  reply = QMessageBox::question(this, "Test", "Quit?",
-                                QMessageBox::Yes|QMessageBox::No);
-  if (reply == QMessageBox::Yes) {
-    qDebug() << "Yes was clicked";
-    QApplication::quit();
-  } else {
-    qDebug() << "Yes was *not* clicked";
-  }
-}
-*/

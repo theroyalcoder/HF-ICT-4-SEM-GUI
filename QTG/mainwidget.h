@@ -22,6 +22,7 @@ private:
     QString numberOfShots = "-1";
     int speed;
     int angle;
+    bool restart;
 
     QMediaPlayer *shootSound;
 
@@ -29,6 +30,7 @@ private:
     QSlider *speedSlider;
 
     QPushButton *actionButton;
+    QPushButton *stop;
 
     QLineEdit *numberOfShotsInput;
     QLineEdit *speedInput;
@@ -51,12 +53,14 @@ private:
 public:
     MainWidget(QWidget *parent = 0, int lspeed = 0, int langle = 0);
     void keyPressEvent(QKeyEvent *event);
-    void onGameFinished();
+    QAction *actionReboot;
 
 public slots:
     void speedSliderMoved(int value);
     void angleSliderMoved(int value);
     void actionButtonClicked();
+    void onGameFinished();
+    void slotReboot();
 };
 
 #endif // MAINWIDGET_H
