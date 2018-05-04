@@ -15,12 +15,11 @@ void Player::move()
 {
     if(direction == 1){
         if(y+7 <=  340 ){
-        y = y+5;
+            y += 5;
         }
-    }
-    if(direction == 2){
-        if(y-7 >=  -heightGA+120){
-             y = y-5;
+    }else if(direction == 2){
+        if(y-7 >=  0){
+             y -= 5;
         }
     }
 }

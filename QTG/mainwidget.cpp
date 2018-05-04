@@ -27,6 +27,8 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent), speed(0), angle(0), restart(false)
 {
     ga = new GameArea(parent);
+    init = true; // Init
+    numberOfShots = 0;
 
 //    Initialisation of shootSound
     shootSound = new QMediaPlayer();
@@ -132,6 +134,10 @@ void MainWidget::connectObjects()
                 ga, SIGNAL(gameFinished()),
                 this, SLOT(onGameFinished()));
 
+    //Game Restart
+    QObject::connect(
+                this, SIGNAL(restartGame()),
+                ga, SLOT(restarter()));
 
     actionReboot = new QAction( this );
     actionReboot->setText( tr("Restart") );
@@ -149,21 +155,12 @@ void MainWidget::connectObjects()
 void MainWidget::onGameFinished()
 {
     QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
+    reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
                                     QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes) {
-//          delete ga;
-//          GameArea *ga;
-          ga->once = false;
-          ga->startGame();
-
-//          repaint();
-
-          //GameArea ga;
+    if (reply == QMessageBox::Yes) {
+        resetGame();
         qDebug() << "Yes was clicked";
-        restart = true;
-//        Restart Game
-        QApplication::allWindows();
+//      Restart Game
       } else {
         qDebug() << "Yes was *not* clicked";
         QApplication::quit();
@@ -174,36 +171,37 @@ void MainWidget::slotReboot()
 {
     //if(restart == true){
         qDebug() << "Performing application reboot...";
-        //delete ga;
         restart = false;
         qApp->exit( MainWindow::EXIT_CODE_REBOOT);
     //}
 
 }
+
+void MainWidget::resetGame()
+{
+    init = true;
+    numberOfShots = 0;
+    emit restartGame();
+    actionButton->setText("Start");
+}
+
 void MainWidget::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_P){
-        //restart = true;
-
-        ga->restarter();
-        speed = 0;
-        angle = 0;
-        restart = false;
-        //slotReboot();
+        resetGame();
     }
-    update();
     if(numberOfShots >= 0){
-    if(event->key() == Qt::Key_W){
-        ga->moven(2);
-        //oben
-    }
-    if(event->key() == Qt::Key_S){
-        ga->moven(1);
-        //Unten
-    }
+        if(event->key() == Qt::Key_W){
+            ga->moven(2);
+            //oben
+        }
+        if(event->key() == Qt::Key_S){
+            ga->moven(1);
+            //Unten
+        }
     }
     if(event->key() == Qt::Key_Space){
-        actionButtonClicked();
+        emit actionButtonClicked();
     }
     if(event->key() == Qt::Key_Q){
        //speed down
@@ -267,22 +265,16 @@ void MainWidget::actionButtonClicked()
 {
     //qDebug() << "actionButton clicked" << endl;
 
-    actionButton->setText("Shoot");
 
-    numberOfShots = numberOfShots + 1;
-    numberOfShotsInput->setText(numberOfShots);
-
-    static int count = -1;
-    count++;
-
-    numberOfShotsInput->setText(QString::number(count));
-
-    if(count == 0) {
+    if(init) {
         qDebug() << "MainWidget - start Game";
+        init = false;
         actionButton->setText("Shoot");
         ga->startGame();
     } else {
         shootSound->play();
         ga->shoot(speed, angle);
+        numberOfShots++;
+        numberOfShotsInput->setText(QString::number(numberOfShots));
     }
 }

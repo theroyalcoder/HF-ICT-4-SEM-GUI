@@ -14,6 +14,7 @@
 #include "player.h"
 #include "shoot.h"
 #include "thread.h"
+#include <QVector>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ class GameArea : public QWidget
     Q_OBJECT
 private:
     QImage *backgroundImg;
-    vector<GameObject *> gameObjects;
+    QVector<GameObject *> gameObjects;
     CollisionDetection *collisionControl;
     bool movement;
     int LifePlayers;
@@ -41,7 +42,6 @@ public:
     void moven(int movement);
     void startGame();
     void shoot(int speed, int angle);
-    void restarter();
 
     int getWidth();
     int getHeight();
@@ -50,6 +50,7 @@ public:
     bool once;
 
 public slots:
+    void restarter();
     void lifeDeduction();
     void next();
 

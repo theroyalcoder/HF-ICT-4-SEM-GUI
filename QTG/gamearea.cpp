@@ -18,7 +18,7 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent), gamestart(false), once(fa
     movement = false;
 
     //Background
-    QImage img(constants::ImgFolder + "background.gif");
+    QImage img(constants::ImgFolder + "background.png");
     backgroundImg = new QImage(img.scaledToWidth(1000));
 
     //Thread
@@ -33,8 +33,6 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent), gamestart(false), once(fa
 
 void GameArea::paintEvent(QPaintEvent *event)
 {
-    update();
-
 //    Creating QPainter
     QPainter painter(this);
 
@@ -47,29 +45,30 @@ void GameArea::paintEvent(QPaintEvent *event)
     }
 
     if(gamestart){
-    //Draw Lebensanzeige
-    painter.setPen(QPen(Qt::black,20));
-    painter.drawLine(50,70,350,70);
+        //Draw Lebensanzeige
+        painter.setPen(QPen(Qt::black,20));
+        painter.drawLine(50,70,350,70);
 
-    //leben
-    painter.setPen(QPen(Qt::red,15));
-    painter.drawLine(50,70,LifePlayers+50,70);
+        //leben
+        painter.setPen(QPen(Qt::red,15));
+        painter.drawLine(50,70,LifePlayers+50,70);
 
-    painter.setPen(QPen(Qt::black,20));
-    painter.drawLine(620,70,920,70);
-    painter.setPen(QPen(Qt::red,15));
-    painter.drawLine(620,70,LifeOpponent+620,70);
-}
-    update();
+        painter.setPen(QPen(Qt::black,20));
+        painter.drawLine(620,70,920,70);
+        painter.setPen(QPen(Qt::red,15));
+        painter.drawLine(620,70,LifeOpponent+620,70);
+    }
 }
 void GameArea::lifeDeduction(){
-    LifePlayers -= 1;
+    LifePlayers -= 10;
 }
 
 void GameArea::moven(int direction)
 {
 //Player mover
-    gameObjects.at(0)->setDirection(direction);
+    if(gameObjects.size() > 0){
+        gameObjects.at(0)->setDirection(direction);
+    }
 }
 
 void GameArea::startGame()
@@ -77,7 +76,7 @@ void GameArea::startGame()
     gamestart = true;
     LifePlayers = 300;
     LifeOpponent = 300;
-
+    once = false;
 //    Create Player
     Player *player = new Player(0, 335,0,height());
     gameObjects.push_back(player);
@@ -93,12 +92,10 @@ void GameArea::startGame()
     //Obstacle *obst = new Obstacle(x, y);
     Obstacle *obst = new Obstacle(850, 200);
     gameObjects.push_back(obst);
-
-//    update
-    this->update();
 }
 
 void GameArea::shoot(int speed, int angle)
+
 {
 //    Create Shoot Object and push back to the other GameObjects
     Shoot *shoot = new Shoot(gameObjects.at(0)->getX()+120, gameObjects.at(0)->getY(), speed, angle);
@@ -107,8 +104,9 @@ void GameArea::shoot(int speed, int angle)
 
 void GameArea::restarter()
 {
-    once = false;
-    gamestart = false;
+    for(GameObject *obj : gameObjects){
+        delete obj;
+    }
     gameObjects.clear();
 }
 
@@ -128,42 +126,39 @@ void GameArea::checkOnce()
 
 void GameArea::next()
 {
-    int count = 0;
-
     if(!once){
 //    going thru all Game Objects and execute move method
-    for (GameObject *gameObject : gameObjects) {
-        GameObject *go = gameObject;
-
-        if(count == 2){
-            if(collisionControl->check(gameObject, gameObjects.at(1))){
-//                Auf 5 ändern
-                LifeOpponent -= 500;
-            }
-
-            if(collisionControl->outOfRange(gameObject, height(), width())){
-                //qDebug() << "out of range";
-                gameObjects.erase(gameObjects.begin() + 2);
-            }
-
-            if(LifeOpponent <= 0){
-                once = true;
-                gameFinished();
-                qDebug() << once;
-                //checkOnce();
-            }
-
-            if(LifePlayers <= 0){
-                once = true;
-                gameFinished();
+        for(int i = 2; i < gameObjects.size(); i++){
+            if(collisionControl->check(gameObjects.at(i), gameObjects.at(1))){
+                // Treffer
+                qDebug() << "Treffer";
+                LifeOpponent -= 50;
             }
         }
-        update();
-        go->move();
 
-        count++;
+        for (GameObject *obj : gameObjects) {
+            obj->move();
+            if(collisionControl->outOfRange(obj, height(), width())){
+                //qDebug() << "out of range";
+                delete obj;
+                gameObjects.removeOne(obj);
+                continue;
+            }
+        }
+
+        if(LifeOpponent <= 0){
+            LifeOpponent = 0;
+            once = true;
+            gameFinished();
+            qDebug() << once;
+            //checkOnce();
+        }
+
+        if(LifePlayers <= 0){
+            once = true;
+            gameFinished();
+        }
+
+        update();
     }
-}
-//    update
-    update();
 }

@@ -1,7 +1,6 @@
 #include "obstacle.h"
 #include "gameobejct.h"
 #include "constants.h"
-#include "gamearea.h"
 
 #include <QImage>
 #include <QDebug>
@@ -14,9 +13,8 @@ Obstacle::Obstacle(int x, int y)
 
 void Obstacle::move()
 {
-    GameArea ga;
     if(up){
-        if(y + 120 < ga.getHeight()){
+        if(y + 120 < 600){
             y +=5;
         }
         else{
