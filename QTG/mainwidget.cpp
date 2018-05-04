@@ -22,6 +22,7 @@
 #include <QUrl>
 #include <QMessageBox>
 #include <QApplication>
+#include <QAction>
 
 MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     : QWidget(parent), speed(0), angle(0), restart(false)
@@ -31,14 +32,10 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
     numberOfShots = 0;
 
 //    Initialisation of shootSound
-    shootSound = new QMediaPlayer();
-    shootSound->setMedia(QUrl::fromLocalFile(constants::AudioFolder + "start.mp3"));
-    shootSound->setVolume(40);
-    shootSound->play();
-
-
-    //shootSound->setMedia(QUrl("qrc:/sounds/1_audio/shoot_playermusic.mp3"));
-    //shootSound->setMedia(QUrl("//Users//patrick//Downloads//img//1_audio//shoot_playermusic.mp3"));
+    bmgSound = new QMediaPlayer();
+    bmgSound->setMedia(QUrl::fromLocalFile(constants::AudioFolder + "start.mp3"));
+    bmgSound->setVolume(40);
+    bmgSound->play();
 
     createObjects();
     createLayout();
@@ -48,7 +45,6 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 void MainWidget::createObjects()
 {
     //1. Create Objects
-
     titleLabel = new QLabel("<h1>Welcome Player ONE</h1>");
     titleLabel->setGeometry(0, 0, 10, 10);
 
@@ -119,17 +115,17 @@ void MainWidget::connectObjects()
                 speedSlider, SIGNAL(valueChanged(int)),
                 this, SLOT(speedSliderMoved(int)));
 
-    //angleslider
+    //Angleslider
     QObject::connect(
                 angleSlider, SIGNAL(valueChanged(int)),
                 this, SLOT(angleSliderMoved(int)));
 
-    //actionbutton
+    //Actionbutton
     QObject::connect(
                 actionButton, SIGNAL(clicked()),
                 this, SLOT(actionButtonClicked()));
 
-    //GameFinished
+    //Game Finished
     QObject::connect(
                 ga, SIGNAL(gameFinished()),
                 this, SLOT(onGameFinished()));
@@ -142,7 +138,8 @@ void MainWidget::connectObjects()
     actionReboot = new QAction( this );
     actionReboot->setText( tr("Restart") );
     actionReboot->setStatusTip( tr("Restarts the application") );
-    QObject::connect( stop, SIGNAL(clicked()),this, SLOT (slotReboot()));
+    QObject::connect( stop, SIGNAL(clicked()),
+                      this, SLOT (slotReboot()));
 
     /*
     Thread *t = new Thread(30);
@@ -155,12 +152,13 @@ void MainWidget::connectObjects()
 void MainWidget::onGameFinished()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Game Fnished", "Do you want to start a new game?",
+    reply = QMessageBox::question(this, "Game Finished", "Do you want to start a new game?",
                                     QMessageBox::Yes|QMessageBox::No);
     if (reply == QMessageBox::Yes) {
-        resetGame();
-        qDebug() << "Yes was clicked";
 //      Restart Game
+        qDebug() << "Yes was clicked";
+        resetGame();
+
       } else {
         qDebug() << "Yes was *not* clicked";
         QApplication::quit();
@@ -172,15 +170,17 @@ void MainWidget::slotReboot()
     //if(restart == true){
         qDebug() << "Performing application reboot...";
         restart = false;
-        qApp->exit( MainWindow::EXIT_CODE_REBOOT);
-    //}
 
+//        EXIT_CODE_REBOOT => einen Neustart machen
+        qApp->exit(MainWindow::EXIT_CODE_REBOOT);
+    //}
 }
 
 void MainWidget::resetGame()
 {
     init = true;
     numberOfShots = 0;
+    bmgSound->stop();
     emit restartGame();
     actionButton->setText("Start");
 }
@@ -240,6 +240,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
         }
     }
 }
+
 void MainWidget::speedSliderMoved(int value)
 {
     //qDebug() << "SpeedSlider Value: " << value;
@@ -258,13 +259,11 @@ void MainWidget::angleSliderMoved(int value)
 
     QString s = QString::number(angle);
     angleInput->setText(s);
-
 }
 
 void MainWidget::actionButtonClicked()
 {
     //qDebug() << "actionButton clicked" << endl;
-
 
     if(init) {
         qDebug() << "MainWidget - start Game";
@@ -272,7 +271,7 @@ void MainWidget::actionButtonClicked()
         actionButton->setText("Shoot");
         ga->startGame();
     } else {
-        shootSound->play();
+        bmgSound->play();
         ga->shoot(speed, angle);
         numberOfShots++;
         numberOfShotsInput->setText(QString::number(numberOfShots));

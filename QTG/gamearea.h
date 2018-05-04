@@ -24,7 +24,7 @@ class GameArea : public QWidget
 private:
     QImage *backgroundImg;
     QVector<GameObject *> gameObjects;
-    CollisionDetection *collisionControl;
+    CollisionDetection *collisionChecker;
     bool movement;
     int LifePlayers;
     int LifeOpponent;
@@ -34,7 +34,7 @@ private:
 
 public:
     GameArea(QWidget *parent = 0);
-    GameArea(GameArea &obj) = delete;
+//    GameArea(GameArea &obj) = delete;
     ~GameArea();
 //    GameArea& operator =(GameArea &obj) = delete;
 

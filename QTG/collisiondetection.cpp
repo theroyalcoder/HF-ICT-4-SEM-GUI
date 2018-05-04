@@ -8,12 +8,12 @@
 
 CollisionDetection::CollisionDetection()
 {
-
+//    leer lassen, braucht es nicht
 }
 
 bool CollisionDetection::check(GameObject *go1, GameObject *go2)
 {
-    //Hadouken
+    //Schuss
     int Hx = go1->getX();
     int Hy = go1->getY();
     int Hwidth = 100;
@@ -26,7 +26,7 @@ bool CollisionDetection::check(GameObject *go1, GameObject *go2)
     int Gwidth =  80;
     int Gheight = 100;
 
-    if(((((Hx + Hwidth)) > Gx) && (Hx < (Gx+Gwidth)))){
+    if((((Hx + Hwidth) > Gx) && (Hx < (Gx+Gwidth)))){
         if(((Hy < (Gy+Gheight)) && ((Hy + Hheight) > Gy))){
              //qDebug() << "getroffen";
              return true;

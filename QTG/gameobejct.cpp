@@ -7,7 +7,7 @@
 #include <QPainter>
 #include <QImage>
 
-GameObject::GameObject(int x, int y, QString imgPath, int width):direction(0)
+GameObject::GameObject(int x, int y, QString imgPath, int width) : direction(0)
 {
     this->setX(x);
     this->setY(y);
@@ -16,15 +16,9 @@ GameObject::GameObject(int x, int y, QString imgPath, int width):direction(0)
     img = new QImage(tmp.scaledToWidth(width));
 }
 
-GameObject::~GameObject()
-{
-    qDebug() << "GameObject destroyed";
-}
+//GameObject::~GameObject() {qDebug() << "GameObject destroyed";}
 
-void GameObject::paint(QPainter *painter)
-{
-    painter->drawImage(this->getX(), this->getY(), *img);
-}
+void GameObject::paint(QPainter *painter) {painter->drawImage(this->getX(), this->getY(), *img);}
 
 void GameObject::setDirection(int nDirection) {direction = nDirection;}
 

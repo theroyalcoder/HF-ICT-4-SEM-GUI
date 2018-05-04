@@ -13,10 +13,11 @@ int main(int argc, char *argv[])
         w.show();
         //w.resize(QSize(900, 900));
         currentExitCode = a.exec();
-    }while( currentExitCode == MainWindow::EXIT_CODE_REBOOT );
+    } while( currentExitCode == MainWindow::EXIT_CODE_REBOOT );
 
     return currentExitCode;
 
+//    old -> lassen wegen Backup
     /*
     QApplication a(argc, argv);
     MainWindow w;

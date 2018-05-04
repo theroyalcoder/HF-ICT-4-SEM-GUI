@@ -24,7 +24,7 @@ private:
     int angle;
     bool restart;
 
-    QMediaPlayer *shootSound;
+    QMediaPlayer *bmgSound;
 
     QSlider *angleSlider;
     QSlider *speedSlider;
@@ -63,6 +63,7 @@ public slots:
     void onGameFinished();
     void slotReboot();
     void resetGame();
+
 signals:
     void restartGame();
 };

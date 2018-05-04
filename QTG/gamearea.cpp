@@ -14,7 +14,7 @@
 
 GameArea::GameArea(QWidget *parent) : QWidget(parent), gamestart(false), once(false)
 {
-    collisionControl = new CollisionDetection();
+    collisionChecker = new CollisionDetection();
     movement = false;
 
     //Background
@@ -50,13 +50,13 @@ void GameArea::paintEvent(QPaintEvent *event)
         painter.drawLine(50,70,350,70);
 
         //leben
-        painter.setPen(QPen(Qt::red,15));
-        painter.drawLine(50,70,LifePlayers+50,70);
+        painter.setPen(QPen(Qt::red, 15));
+        painter.drawLine(50, 70, LifePlayers + 50, 70);
 
-        painter.setPen(QPen(Qt::black,20));
-        painter.drawLine(620,70,920,70);
-        painter.setPen(QPen(Qt::red,15));
-        painter.drawLine(620,70,LifeOpponent+620,70);
+        painter.setPen(QPen(Qt::black, 20));
+        painter.drawLine(620, 70, 920, 70);
+        painter.setPen(QPen(Qt::red, 15));
+        painter.drawLine(620, 70, LifeOpponent + 620, 70);
     }
 }
 void GameArea::lifeDeduction(){
@@ -77,8 +77,9 @@ void GameArea::startGame()
     LifePlayers = 300;
     LifeOpponent = 300;
     once = false;
+
 //    Create Player
-    Player *player = new Player(0, 335,0,height());
+    Player *player = new Player(0, 335, 0, height());
     gameObjects.push_back(player);
 
     srand(time(NULL));
@@ -95,25 +96,23 @@ void GameArea::startGame()
 }
 
 void GameArea::shoot(int speed, int angle)
-
 {
 //    Create Shoot Object and push back to the other GameObjects
-    Shoot *shoot = new Shoot(gameObjects.at(0)->getX()+120, gameObjects.at(0)->getY(), speed, angle);
+    Shoot *shoot = new Shoot(gameObjects.at(0)->getX() + 120, gameObjects.at(0)->getY(), speed, angle);
+
     gameObjects.push_back(shoot);
 }
 
 void GameArea::restarter()
 {
     for(GameObject *obj : gameObjects){
-        delete obj;
+//        delete obj;
     }
+
     gameObjects.clear();
 }
 
-GameArea::~GameArea()
-{
-    //delete this;
-}
+GameArea::~GameArea() {qDebug() << "GameArea Object destroyed";}
 
 int GameArea::getWidth() {return width();}
 
@@ -129,7 +128,7 @@ void GameArea::next()
     if(!once){
 //    going thru all Game Objects and execute move method
         for(int i = 2; i < gameObjects.size(); i++){
-            if(collisionControl->check(gameObjects.at(i), gameObjects.at(1))){
+            if(collisionChecker->check(gameObjects.at(i), gameObjects.at(1))){
                 // Treffer
                 qDebug() << "Treffer";
                 LifeOpponent -= 50;
@@ -138,7 +137,7 @@ void GameArea::next()
 
         for (GameObject *obj : gameObjects) {
             obj->move();
-            if(collisionControl->outOfRange(obj, height(), width())){
+            if(collisionChecker->outOfRange(obj, height(), width())){
                 //qDebug() << "out of range";
                 delete obj;
                 gameObjects.removeOne(obj);
