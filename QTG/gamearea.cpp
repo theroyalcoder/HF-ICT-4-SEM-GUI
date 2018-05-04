@@ -60,7 +60,7 @@ void GameArea::paintEvent(QPaintEvent *event)
     }
 }
 void GameArea::lifeDeduction(){
-    LifePlayers -= 10;
+    LifePlayers -= 1;
 }
 
 void GameArea::moven(int direction)
@@ -99,7 +99,6 @@ void GameArea::shoot(int speed, int angle)
 {
 //    Create Shoot Object and push back to the other GameObjects
     Shoot *shoot = new Shoot(gameObjects.at(0)->getX() + 120, gameObjects.at(0)->getY(), speed, angle);
-
     gameObjects.push_back(shoot);
 }
 
@@ -108,7 +107,6 @@ void GameArea::restarter()
     for(GameObject *obj : gameObjects){
 //        delete obj;
     }
-
     gameObjects.clear();
 }
 
@@ -131,7 +129,7 @@ void GameArea::next()
             if(collisionChecker->check(gameObjects.at(i), gameObjects.at(1))){
                 // Treffer
                 qDebug() << "Treffer";
-                LifeOpponent -= 50;
+                LifeOpponent -= 5;
             }
         }
 
