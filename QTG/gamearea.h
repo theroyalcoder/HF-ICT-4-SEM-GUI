@@ -22,38 +22,36 @@ class GameArea : public QWidget
 {
     Q_OBJECT
 private:
-    QImage *backgroundImg;
     QVector<GameObject *> gameObjects;
+    QImage *backgroundImg;
     CollisionDetection *collisionChecker;
     bool movement;
     int LifePlayers;
     int LifeOpponent;
     bool gamestart;
 
+//    Verhindern, dass GameArea Objekte kopiert werden
     Q_DISABLE_COPY(GameArea)
 
 public:
     GameArea(QWidget *parent = 0);
-//    GameArea(GameArea &obj) = delete;
     ~GameArea();
+
+//    GameArea(GameArea &obj) = delete;
 //    GameArea& operator =(GameArea &obj) = delete;
 
     void paintEvent(QPaintEvent *event);
     void moven(int movement);
     void startGame();
     void shoot(int speed, int angle);
-
     int getWidth();
     int getHeight();
     void checkOnce();
-
     bool once;
-
 public slots:
     void restarter();
     void lifeDeduction();
     void next();
-
 signals:
     void gameFinished();
 };

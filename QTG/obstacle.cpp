@@ -23,13 +23,13 @@ void Obstacle::move()
         }
     }
     if(down){
-    if(y > 0){
-        y -=5;
-    }
-    else{
-        down = false;
-        up = true;
-    }
+        if(y > 0){
+            y -=5;
+        }
+        else{
+            down = false;
+            up = true;
+        }
     }
 
 }

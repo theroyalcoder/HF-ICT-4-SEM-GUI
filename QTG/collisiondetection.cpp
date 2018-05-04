@@ -6,11 +6,6 @@
 
 #include <QDebug>
 
-CollisionDetection::CollisionDetection()
-{
-//    leer lassen, braucht es nicht
-}
-
 bool CollisionDetection::check(GameObject *go1, GameObject *go2)
 {
     //Schuss

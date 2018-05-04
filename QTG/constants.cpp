@@ -1,4 +1,5 @@
 #include "constants.h"
+
 //Oetti
 //QString constants::ImgFolder = "//Users//patrick//Downloads//img//";
 

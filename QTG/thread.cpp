@@ -2,10 +2,7 @@
 
 #include <QThread>
 
-Thread::Thread(int nspeed)
-{
-speed = nspeed;
-}
+Thread::Thread(int nspeed) {speed = nspeed;}
 
 void Thread::run()
 {

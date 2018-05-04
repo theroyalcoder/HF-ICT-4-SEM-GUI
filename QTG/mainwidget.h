@@ -46,12 +46,15 @@ private:
     GameObject *player;
     GameObject *shoot;
 
+    // For initialisation
+    bool init;
+
     void createObjects();
     void createLayout();
     void connectObjects();
 
-    bool init; // For init
 public:
+    QMediaPlayer *shootSound;
     MainWidget(QWidget *parent = 0, int lspeed = 0, int langle = 0);
     void keyPressEvent(QKeyEvent *event);
     QAction *actionReboot;

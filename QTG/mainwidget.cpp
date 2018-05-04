@@ -34,8 +34,13 @@ MainWidget::MainWidget(QWidget *parent, int speed, int angle)
 //    Initialisation of shootSound
     bmgSound = new QMediaPlayer();
     bmgSound->setMedia(QUrl::fromLocalFile(constants::AudioFolder + "start.mp3"));
-    bmgSound->setVolume(40);
+    bmgSound->setVolume(80);
     bmgSound->play();
+
+//    sound pro Schuss => zu nervig / fällt in ein Limbus
+//    shootSound = new QMediaPlayer();
+//    shootSound->setMedia(QUrl::fromLocalFile(constants::AudioFolder + "shoot_playermusic.mp3"));
+//    shootSound->setVolume(40);
 
     createObjects();
     createLayout();
@@ -138,22 +143,21 @@ void MainWidget::connectObjects()
     actionReboot = new QAction( this );
     actionReboot->setText( tr("Restart") );
     actionReboot->setStatusTip( tr("Restarts the application") );
-    QObject::connect( stop, SIGNAL(clicked()),
-                      this, SLOT (slotReboot()));
 
-    /*
-    Thread *t = new Thread(30);
-    t->start();
+    QObject::connect(
+                stop, SIGNAL(clicked()),
+                this, SLOT (slotReboot()));
 
-    QObject::connect(, SIGNAL(refresh()),this, SLOT (slotReboot()));
-*/
+//    Thread *t = new Thread(30);
+//    t->start();
+//    QObject::connect(, SIGNAL(refresh()),this, SLOT (slotReboot()));
 }
 
 void MainWidget::onGameFinished()
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Game Finished", "Do you want to start a new game?",
-                                    QMessageBox::Yes|QMessageBox::No);
+                                    QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes) {
 //      Restart Game
         qDebug() << "Yes was clicked";
@@ -171,14 +175,14 @@ void MainWidget::slotReboot()
         qDebug() << "Performing application reboot...";
         restart = false;
 
-//        EXIT_CODE_REBOOT => einen Neustart machen
+//        Mit "EXIT_CODE_REBOOT" für Neustart
         qApp->exit(MainWindow::EXIT_CODE_REBOOT);
     //}
 }
 
 void MainWidget::resetGame()
 {
-    init = true;
+    init = true; //Wichtig für Methode actionButtonClicked()
     numberOfShots = 0;
     bmgSound->stop();
     emit restartGame();
@@ -190,23 +194,30 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_P){
         resetGame();
     }
+
+//    Eigenen Spieler bewegen
     if(numberOfShots >= 0){
         if(event->key() == Qt::Key_W){
             ga->moven(2);
             //oben
         }
+
         if(event->key() == Qt::Key_S){
             ga->moven(1);
             //Unten
         }
     }
+
+//    Schüsse abfeuern
     if(event->key() == Qt::Key_Space){
         emit actionButtonClicked();
     }
+
+//    Geschwindigkeit anpassen
     if(event->key() == Qt::Key_Q){
        //speed down
         if(speed >= 2){
-            speed--;
+            speed-= 5;
             speedSlider->setValue(speed);
             QString s = QString::number(speed);
             speedInput->setText(s);
@@ -215,16 +226,18 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_E){
         if(speed <= 99){
             //speed up
-            speed++;
+            speed+= 5;
             speedSlider->setValue(speed);
             QString s = QString::number(speed);
             speedInput->setText(s);
         }
     }
+
+//    Winkel anpassen
     if(event->key() == Qt::Key_A){
         if(angle >= 1){
             //angle down
-            angle--;
+            angle-= 5;
             angleSlider->setValue(angle);
             QString s = QString::number(angle);
             angleInput->setText(s);
@@ -233,7 +246,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_D){
         if(angle <= 89){
             //angle up
-            angle++;
+            angle+= 5;
             angleSlider->setValue(angle);
             QString s = QString::number(angle);
             angleInput->setText(s);

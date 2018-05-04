@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     return currentExitCode;
 
-//    old -> lassen wegen Backup
+//    old -> bitte stehen lassen
     /*
     QApplication a(argc, argv);
     MainWindow w;

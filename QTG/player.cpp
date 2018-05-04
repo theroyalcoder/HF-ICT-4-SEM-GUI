@@ -6,7 +6,6 @@
 Player::Player(int x, int y, int direction, int heightGA)
     : GameObject(x, y, constants::ImgFolder + "player.png", 250)
 {
-//player.jpg
 //    this->direction = direction;
 //    this->heightGA = heightGA;
 }

@@ -6,6 +6,7 @@
 #include "thread.h"
 #include "constants.h"
 #include "collisiondetection.h"
+#include "mainwidget.h"
 
 #include <QDebug>
 #include <QPainter>
@@ -26,9 +27,13 @@ GameArea::GameArea(QWidget *parent) : QWidget(parent), gamestart(false), once(fa
     Thread *s = new Thread(300);
     t->start();
     s->start();
-    QObject::connect(t, SIGNAL(refresh()), this, SLOT(next()));
-    QObject::connect(s, SIGNAL(refresh()), this, SLOT(lifeDeduction()));
+    QObject::connect(
+                t, SIGNAL(refresh()),
+                this, SLOT(next()));
 
+    QObject::connect(
+                s, SIGNAL(refresh()),
+                this, SLOT(lifeDeduction()));
 }
 
 void GameArea::paintEvent(QPaintEvent *event)
@@ -49,7 +54,7 @@ void GameArea::paintEvent(QPaintEvent *event)
         painter.setPen(QPen(Qt::black,20));
         painter.drawLine(50,70,350,70);
 
-        //leben
+        //Leben
         painter.setPen(QPen(Qt::red, 15));
         painter.drawLine(50, 70, LifePlayers + 50, 70);
 
@@ -65,7 +70,7 @@ void GameArea::lifeDeduction(){
 
 void GameArea::moven(int direction)
 {
-//Player mover
+//    Player mover
     if(gameObjects.size() > 0){
         gameObjects.at(0)->setDirection(direction);
     }
@@ -82,9 +87,8 @@ void GameArea::startGame()
     Player *player = new Player(0, 335, 0, height());
     gameObjects.push_back(player);
 
-    srand(time(NULL));
-
 //    Create Obstacle Objects on a randomized place
+    srand(time(NULL));
     int x, y, w;
     w = width();
     x = rand() % (w / 4) + 3 * w / 4 - 50;
@@ -100,13 +104,15 @@ void GameArea::shoot(int speed, int angle)
 //    Create Shoot Object and push back to the other GameObjects
     Shoot *shoot = new Shoot(gameObjects.at(0)->getX() + 120, gameObjects.at(0)->getY(), speed, angle);
     gameObjects.push_back(shoot);
+
+//    MainWidget mw;
+//    mw.shootSound->play();
 }
 
 void GameArea::restarter()
 {
-    for(GameObject *obj : gameObjects){
-//        delete obj;
-    }
+//    for(GameObject *obj : gameObjects){delete obj;}
+//    delete Pointer
     gameObjects.clear();
 }
 
@@ -116,10 +122,7 @@ int GameArea::getWidth() {return width();}
 
 int GameArea::getHeight() {return height();}
 
-void GameArea::checkOnce()
-{
-    if(once) {gameFinished();}
-}
+void GameArea::checkOnce() {if(once) {gameFinished();}}
 
 void GameArea::next()
 {
