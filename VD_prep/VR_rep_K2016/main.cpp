@@ -21,5 +21,8 @@ int main() {
 
     cout << crossum(123);
 
+    srand(static_cast<unsigned int>(time(nullptr)));
+
+
     return 0;
 }

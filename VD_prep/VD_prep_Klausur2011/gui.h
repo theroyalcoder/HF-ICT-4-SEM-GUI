@@ -10,7 +10,6 @@
 
 class QPaintEvent;
 
-
 class Gui : public QWidget
 {
     Q_OBJECT
@@ -18,6 +17,7 @@ public:
     Gui();
     //explicit Gui(QWidget *parent = 0);
     ~Gui();
+    PaintArea *pa;
 
 private:
     QLineEdit *numberInput;
