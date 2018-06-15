@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 using namespace std;
 
 class Node {
@@ -36,9 +37,8 @@ public:
     }
     int sum;
     int sumEven();
-
     int sumEven2(Node *);
-
+    static void printMaximumPath(vector<int> values);
 
 };
 
@@ -64,6 +64,11 @@ int BinaryTree::sumEven2(Node *n) {
     return sum;
 }
 
+void BinaryTree::printMaximumPath(vector<int> values) {
+    
+}
+
+
 int main(int argc, char **argv) {
     BinaryTree bt ;
     bt.insert (9);
@@ -74,8 +79,8 @@ int main(int argc, char **argv) {
     bt.insert (8);
 
     int sum = bt.sumEven(); // = 18
+    cout << sum << endl;
 
-    cout << sum;
 
     return 0;
 }
